@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ff8fb3">
+<title>Maicha 💛 Miss-Me Zone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#ec4899; --pink-deep:#db2777; --orange:#fb923c; --yellow:#fde047;
+    --ink:#2b2118; --card:#fffdf8; --mint:#6ee7b7; --sky:#7dd3fc; --lilac:#c4b5fd;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Nunito',system-ui,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#fff1f2 0%,#ffe4e6 30%,#fef3c7 70%,#fff7ed 100%);
+    min-height:100dvh;overflow-x:hidden;
+  }
+  .wrap{max-width:480px;margin:0 auto;padding:0 16px 120px}
+  h1,h2,h3,.chunk{font-family:'Fredoka',sans-serif}
+
+  /* ---------- floating hearts bg ---------- */
+  .floaties{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+  .floaties span{position:absolute;bottom:-60px;font-size:22px;opacity:.55;animation:rise linear infinite}
+  @keyframes rise{to{transform:translateY(-110vh) rotate(40deg)}}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;z-index:1;text-align:center;padding:56px 8px 8px}
+  .hero .kicker{display:inline-block;background:var(--ink);color:#fff;font-weight:800;font-size:13px;
+    padding:8px 16px;border-radius:999px;letter-spacing:.5px;transform:rotate(-3deg)}
+  .hero h1{font-size:52px;line-height:1.05;margin:18px 0 6px;font-weight:700}
+  .hero h1 .wave{display:inline-block;animation:wave 2.2s ease-in-out infinite;transform-origin:70% 70%}
+  @keyframes wave{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(16deg)}20%{transform:rotate(-10deg)}30%{transform:rotate(14deg)}40%{transform:rotate(-6deg)}50%{transform:rotate(4deg)}}
+  .hero p{font-size:17px;font-weight:600;opacity:.85;max-width:340px;margin:0 auto}
+  .hero .hint{margin-top:14px;font-size:14px;font-weight:700;color:var(--pink-deep);animation:bounce 1.6s ease-in-out infinite}
+  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+  /* ---------- cards ---------- */
+  section.card{position:relative;z-index:1;background:var(--card);border:3px solid var(--ink);
+    border-radius:28px;padding:26px 20px;margin-top:26px;box-shadow:6px 6px 0 var(--ink);
+    opacity:0;transform:translateY(26px);transition:opacity .5s ease,transform .5s ease}
+  section.card.shown{opacity:1;transform:none}
+  .card h2{font-size:26px;margin-bottom:4px}
+  .card .sub{font-size:15px;font-weight:600;opacity:.75;margin-bottom:18px}
+
+  /* ---------- buttons ---------- */
+  .btn{display:block;width:100%;border:3px solid var(--ink);border-radius:20px;
+    font-family:'Fredoka',sans-serif;font-size:20px;font-weight:600;color:var(--ink);
+    padding:16px;cursor:pointer;box-shadow:4px 4px 0 var(--ink);
+    transition:transform .08s ease,box-shadow .08s ease;user-select:none;text-align:center}
+  .btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+  .btn-pink{background:linear-gradient(135deg,#f9a8d4,#f472b6)}
+  .btn-yellow{background:linear-gradient(135deg,#fde68a,#fbbf24)}
+  .btn-mint{background:linear-gradient(135deg,#a7f3d0,#6ee7b7)}
+  .btn-sky{background:linear-gradient(135deg,#bae6fd,#7dd3fc)}
+  .btn-lilac{background:linear-gradient(135deg,#ddd6fe,#c4b5fd)}
+
+  /* ---------- hug machine ---------- */
+  .hug-count{font-family:'Fredoka',sans-serif;font-size:44px;font-weight:700;color:var(--pink-deep);text-align:center;margin:6px 0 2px}
+  .hug-label{text-align:center;font-weight:700;font-size:14px;opacity:.7;margin-bottom:14px}
+  .hug-msg{min-height:56px;text-align:center;font-size:16px;font-weight:700;color:#7c2d12;
+    background:#fff7ed;border:2px dashed var(--orange);border-radius:16px;padding:12px;margin-top:14px}
+  .hug-btn{font-size:24px;animation:pulse 1.8s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+  .hug-btn:active{animation:none}
+
+  /* ---------- letters ---------- */
+  .env-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .env{border:3px solid var(--ink);border-radius:18px;background:#fff;padding:14px 8px;text-align:center;
+    cursor:pointer;box-shadow:3px 3px 0 var(--ink);transition:transform .08s;min-height:110px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+  .env:active{transform:scale(.96)}
+  .env .e{font-size:34px}
+  .env .t{font-family:'Fredoka',sans-serif;font-weight:600;font-size:14px}
+  .env.opened{background:#fef9c3}
+  .env.opened .e{filter:grayscale(.4)}
+  .letter-modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:24px;
+    background:rgba(43,33,24,.55);backdrop-filter:blur(3px)}
+  .letter-modal.show{display:flex}
+  .letter{background:#fffdf5;border:3px solid var(--ink);border-radius:24px;box-shadow:8px 8px 0 var(--ink);
+    max-width:400px;width:100%;padding:28px 22px;transform:scale(.8) rotate(-2deg);transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+    max-height:70dvh;overflow:auto}
+  .letter-modal.show .letter{transform:scale(1) rotate(-1deg)}
+  .letter .ln{font-family:'Fredoka',sans-serif;font-size:13px;color:var(--pink-deep);margin-bottom:10px}
+  .letter p{font-size:17px;font-weight:600;line-height:1.55}
+  .letter .close{margin-top:18px}
+
+  /* ---------- roast machine ---------- */
+  .slot{background:#2b2118;color:#fff;border-radius:18px;padding:22px 16px;text-align:center;min-height:120px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:14px}
+  .slot .tag{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+    background:#fff;color:var(--ink);padding:4px 12px;border-radius:999px}
+  .slot .line{font-size:18px;font-weight:700;line-height:1.45}
+  .slot .idle{opacity:.5;font-size:15px}
+
+  /* ---------- game ---------- */
+  .game-arena{position:relative;height:320px;border:3px solid var(--ink);border-radius:18px;background:linear-gradient(180deg,#fce7f3,#fff7ed);
+    overflow:hidden;margin-bottom:14px;touch-action:none}
+  .game-arena .gheart{position:absolute;top:-50px;font-size:32px;cursor:pointer;user-select:none;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(400px) rotate(30deg)}}
+  .game-arena .pop{position:absolute;font-family:'Fredoka',sans-serif;font-weight:700;color:var(--pink-deep);
+    animation:popfade .7s ease-out forwards;pointer-events:none;font-size:20px}
+  @keyframes popfade{to{transform:translateY(-34px);opacity:0}}
+  .game-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px}
+  .game-msg{text-align:center;font-weight:700;font-size:16px;min-height:48px;margin-top:12px;color:#7c2d12}
+  .game-overlay{position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;
+    background:rgba(255,253,248,.88);z-index:2;padding:20px;text-align:center}
+  .game-overlay h3{font-size:24px}
+  .game-overlay p{font-weight:600;font-size:15px;opacity:.8}
+  .game-overlay .btn{width:auto;padding:12px 34px;font-size:18px}
+
+  /* ---------- meter ---------- */
+  .meter-out{text-align:center;margin:6px 0 16px}
+  .meter-val{font-family:'Fredoka',sans-serif;font-size:52px;font-weight:700;color:var(--pink-deep)}
+  .meter-word{font-size:17px;font-weight:800;margin-top:2px;min-height:28px}
+  input[type=range]{width:100%;appearance:none;-webkit-appearance:none;height:18px;border-radius:999px;
+    background:linear-gradient(90deg,#fde68a,#fb923c,#ec4899);border:3px solid var(--ink);outline:none;margin:6px 0 4px}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:38px;height:38px;border-radius:50%;
+    background:#fff;border:3px solid var(--ink);box-shadow:2px 2px 0 var(--ink);cursor:pointer;font-size:20px}
+  input[type=range]::-moz-range-thumb{width:34px;height:34px;border-radius:50%;background:#fff;border:3px solid var(--ink);cursor:pointer}
+  .meter-scale{display:flex;justify-content:space-between;font-size:12px;font-weight:800;opacity:.6}
+
+  /* ---------- footer ---------- */
+  footer{position:relative;z-index:1;text-align:center;margin-top:40px;padding:0 20px}
+  footer .sig{font-family:'Fredoka',sans-serif;font-size:18px;font-weight:600}
+  footer .tiny{font-size:13px;font-weight:600;opacity:.6;margin-top:8px}
+
+  /* ---------- fab ---------- */
+  .fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:40;
+    width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#f9a8d4,#ec4899);
+    border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font-size:30px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;transition:transform .1s}
+  .fab:active{transform:scale(.9)}
+
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:60}
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+  }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+<canvas id="confetti"></canvas>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="kicker">timro lagi matra 💌</span>
+    <h1>Maicha!! <span class="wave">👋</span></h1>
+    <p>miss bhairacha? thik cha — ma yei chu. tala scroll gara, timro lagi khelne kura haru banako chu 😌</p>
+    <div class="hint">👇 tala jaana, ramailo cha 👇</div>
+  </div>
+
+  <!-- HUG MACHINE -->
+  <section class="card" id="hug">
+    <h2>🤗 Virtual Hug Machine</h2>
+    <div class="sub">button thich, hug receive gara. jati thichyo, teti maya.</div>
+    <div class="hug-count" id="hugCount">0</div>
+    <div class="hug-label">ota hug collect bhayo</div>
+    <button class="btn btn-pink hug-btn" id="hugBtn">HUG DEU NA 🫂</button>
+    <div class="hug-msg" id="hugMsg">ready? pahilo hug free ma 😌</div>
+  </section>
+
+  <!-- LETTERS -->
+  <section class="card" id="letters">
+    <h2>💌 Miss-You Letters</h2>
+    <div class="sub">euta kholna, mann lage sabai kholna. <span id="letterProg">0/6 kholyo</span></div>
+    <div class="env-grid" id="envGrid"></div>
+  </section>
+
+  <div class="letter-modal" id="letterModal">
+    <div class="letter">
+      <div class="ln" id="letterNum">letter #1</div>
+      <p id="letterText"></p>
+      <button class="btn btn-yellow close" id="letterClose">thik cha, bujhe 💛</button>
+    </div>
+  </div>
+
+  <!-- ROAST / COMPLIMENT -->
+  <section class="card" id="roast">
+    <h2>🎰 Compliment ki Roast?</h2>
+    <div class="sub">button thich, kismat aajmau. roast bhaye pani pyaar wala ho 😈</div>
+    <div class="slot" id="slot">
+      <div class="idle">ready huda thich na... 👀</div>
+    </div>
+    <button class="btn btn-yellow" id="roastBtn">KISMAT KHOL 🎲</button>
+  </section>
+
+  <!-- GAME -->
+  <section class="card" id="game">
+    <h2>💘 Maya Samau</h2>
+    <div class="sub">30 second cha. khasne mutu haru samau — jati samatyo, teti maya!</div>
+    <div class="game-hud">
+      <span>⭐ score: <b id="gScore">0</b></span>
+      <span>⏱️ <b id="gTime">30</b>s</span>
+      <span>🏆 best: <b id="gBest">0</b></span>
+    </div>
+    <div class="game-arena" id="arena">
+      <div class="game-overlay" id="gOverlay">
+        <h3 id="gOverTitle">ready, maicha? 😏</h3>
+        <p id="gOverSub">mutu haru tala khaschan — tap garera samau!</p>
+        <button class="btn btn-mint" id="gStart">KHELNE! 🎮</button>
+      </div>
+    </div>
+    <div class="game-msg" id="gMsg"></div>
+  </section>
+
+  <!-- MISS METER -->
+  <section class="card" id="meter">
+    <h2>📊 Aaja ko Miss Meter</h2>
+    <div class="sub">slider ghumau. honestly bhanana, ma judge gardina 😌</div>
+    <div class="meter-out">
+      <div class="meter-val"><span id="meterVal">50</span>%</div>
+      <div class="meter-word" id="meterWord"></div>
+    </div>
+    <input type="range" id="meter" min="0" max="100" value="50">
+    <div class="meter-scale"><span>0 — jhut 😒</span><span>100 — full miss 🥺</span></div>
+  </section>
+
+  <footer>
+    <div class="sig">timro lagi, timro manxe bata 💛</div>
+    <div class="sig" style="margin-top:4px">— kaza</div>
+    <div class="tiny">miss bhayo bhane feri aauna. ma yei hun chu, hamesha 😌</div>
+  </footer>
+</div>
+
+<button class="fab" id="fab" aria-label="hug">🤗</button>
+
+<script>
+(function(){
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const buzz = ms => { try{ navigator.vibrate && navigator.vibrate(ms); }catch(e){} };
+
+  /* ---------- floating hearts ---------- */
+  const floaties = $('floaties');
+  const ems = ['💛','💕','💖','✨','🌸','💌'];
+  for(let i=0;i<14;i++){
+    const s = document.createElement('span');
+    s.textContent = ems[i % ems.length];
+    s.style.left = (Math.random()*100)+'vw';
+    s.style.fontSize = (14+Math.random()*22)+'px';
+    s.style.animationDuration = (7+Math.random()*9)+'s';
+    s.style.animationDelay = (Math.random()*10)+'s';
+    floaties.appendChild(s);
+  }
+
+  /* ---------- confetti ---------- */
+  const cv = $('confetti'), cx = cv.getContext('2d');
+  let parts = [], raf = null;
+  function sizeCv(){ cv.width = innerWidth; cv.height = innerHeight; }
+  sizeCv(); addEventListener('resize', sizeCv);
+  const cols = ['#ec4899','#fb923c','#fde047','#6ee7b7','#7dd3fc','#c4b5fd'];
+  function boom(x, y, n){
+    for(let i=0;i<(n||40);i++){
+      parts.push({x:x, y:y, vx:(Math.random()-.5)*11, vy:Math.random()*-9-2,
+        s:5+Math.random()*7, r:Math.random()*Math.PI, vr:(Math.random()-.5)*.3,
+        c:cols[(Math.random()*cols.length)|0], life:70+Math.random()*40});
+    }
+    if(!raf) tick();
+  }
+  function tick(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    parts = parts.filter(p=>p.life>0);
+    for(const p of parts){
+      p.x+=p.vx; p.y+=p.vy; p.vy+=.32; p.r+=p.vr; p.life--;
+      cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r);
+      cx.globalAlpha = Math.min(1, p.life/40);
+      cx.fillStyle = p.c; cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.62); cx.restore();
+    }
+    raf = parts.length ? requestAnimationFrame(tick) : null;
+    if(!raf) cx.clearRect(0,0,cv.width,cv.height);
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  const io = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('shown'); io.unobserve(e.target); } });
+  },{threshold:.12});
+  document.querySelectorAll('section.card').forEach(c=>io.observe(c));
+
+  /* ---------- HUG MACHINE ---------- */
+  const hugCount = $('hugCount'), hugBtn = $('hugBtn'), hugMsg = $('hugMsg');
+  let hugs = parseInt(localStorage.getItem('maicha_hugs')||'0',10)||0;
+  const hugLines = [
+    "lu, aarko hug. greedy! 😌",
+    "eh, kasto chado chado thichya... mann paryo? 😏",
+    "hug deliver bhayo! feel bhayo? 🫂",
+    "balla pugyo hola... ki ajhai chahiyo? 👀",
+    "yo hug ma extra maya free ma 🎁",
+    "kasto soft hug! practice garya jasto cha 😄",
+    "note: yo hug ko expiry date chaina 💛",
+    "arko! timro lagi stock unlimited cha 📦"
+  ];
+  const milestones = {
+    10:"10 ota!! officially hug-addict ghoshit 😂",
+    25:"25 ota! phone nai angalo, ma feel garchu 😭",
+    50:"50!! maicha, timro hug-budget sakkiyo... jhut, unlimited cha 😌",
+    100:"100 ota hug. LEGEND. 🏆💛",
+    200:"200?! okay, yo chai world record ho 🏅"
+  };
+  function renderHugs(){ hugCount.textContent = hugs; }
+  renderHugs();
+  hugBtn.addEventListener('click', ()=>{
+    hugs++;
+    localStorage.setItem('maicha_hugs', String(hugs));
+    renderHugs(); buzz(30);
+    const r = hugBtn.getBoundingClientRect();
+    boom(r.left + r.width/2, r.top, 34);
+    hugMsg.textContent = milestones[hugs] || hugLines[(Math.random()*hugLines.length)|0].replace('{n}',hugs);
+  });
+  $('fab').addEventListener('click', ()=>{
+    document.getElementById('hug').scrollIntoView({behavior:'smooth',block:'center'});
+    setTimeout(()=>hugBtn.click(), 600);
+  });
+
+  /* ---------- LETTERS ---------- */
+  const letters = [
+    "yaad cha hamro first hello? kaha socheko thiye tyo hello le yeti dherai kura lyaunecha bhanera. 💛",
+    "timi online aayeko dekhe bitikai mero mood full charge huncha — phone ko battery jasto. 🔋😌",
+    "miss bhayo bhane euta kaam gara: deep breath leu, ani samjha — koi ta timi lai ettikai samjhiracha. (hint: ma 😌)",
+    "timi hasda... actually maile dekheko chaina, tara chat ma pani tha huncha — timro 'hahaha' ma timro haso sunincha jasto lagcha. 😄",
+    "aaja ko gyan: miss garne lai pani miss garincha. so technically, hamro miss-miss barabar. hisab clear. 🤝😂",
+    "last ma euta secret: yo site banauda maile timi lai nai samjhera banaeko. cheesy? maybe. true? 100%. 💛"
+  ];
+  const grid = $('envGrid'), modal = $('letterModal');
+  const opened = JSON.parse(localStorage.getItem('maicha_letters')||'[]');
+  function renderLetters(){
+    grid.innerHTML = '';
+    letters.forEach((_,i)=>{
+      const d = document.createElement('div');
+      d.className = 'env' + (opened.includes(i)?' opened':'');
+      d.innerHTML = '<div class="e">'+(opened.includes(i)?'💌':'✉️')+'</div><div class="t">letter '+(i+1)+'</div>';
+      d.addEventListener('click', ()=>{
+        $('letterNum').textContent = 'letter #'+(i+1)+' 💌';
+        $('letterText').textContent = letters[i];
+        modal.classList.add('show'); buzz(20);
+        if(!opened.includes(i)){ opened.push(i); localStorage.setItem('maicha_letters', JSON.stringify(opened)); renderLetters(); }
+      });
+      grid.appendChild(d);
+    });
+    $('letterProg').textContent = opened.length + '/' + letters.length + ' kholyo';
+  }
+  renderLetters();
+  $('letterClose').addEventListener('click', ()=>modal.classList.remove('show'));
+  modal.addEventListener('click', e=>{ if(e.target===modal) modal.classList.remove('show'); });
+
+  /* ---------- ROAST / COMPLIMENT ---------- */
+  const compliments = [
+    "timro 'good morning' le mero din set huncha. no joke. 💛",
+    "timi jasto online bestie pauna lai luck chahincha. mero luck ramro raicha 😌",
+    "timi bina group chat aadha funny huncha. facts.",
+    "timro typing speed dekhera impress — ani timro sense of humor dekhera dherai impress 😄",
+    "timi sanga kura garda time kasari jancha tha hudaina. magic ho ki k ho? ✨"
+  ];
+  const roasts = [
+    "timi online aayera 'seen' garne bani... kasto ho maicha? 😏",
+    "timro reply auna yeti time lagcha, maile ta bhat nai pakae. 🍚😭",
+    "timi sanga argue garna sakdina — timi jitchau, ma haar maanidine. 😌",
+    "'maicha' bhaneko 'maicha reply chai kahile auchha?' bhanne ho 😂",
+    "timro last seen ra mero patience — duitai test ma chan. 😈"
+  ];
+  const slot = $('slot');
+  $('roastBtn').addEventListener('click', ()=>{
+    buzz(25);
+    const isRoast = Math.random() < .45;
+    const line = isRoast ? roasts[(Math.random()*roasts.length)|0]
+                         : compliments[(Math.random()*compliments.length)|0];
+    // little shuffle tease
+    let n = 0;
+    const spin = setInterval(()=>{
+      slot.innerHTML = '<div class="tag">🎰 rolling...</div><div class="line idle">.</div>';
+      if(++n > 5){
+        clearInterval(spin);
+        slot.innerHTML = '<div class="tag">'+(isRoast?'😈 roast (pyaar wala)':'💛 compliment')+'</div><div class="line">'+line+'</div>';
+        boom(innerWidth/2, innerHeight*0.35, 24);
+      }
+    }, 90);
+  });
+
+  /* ---------- GAME: MAYA SAMAU ---------- */
+  const arena = $('arena'), overlay = $('gOverlay'), gScore = $('gScore'),
+        gTime = $('gTime'), gMsg = $('gMsg'), gStart = $('gStart');
+  let best = parseInt(localStorage.getItem('maicha_best')||'0',10)||0;
+  $('gBest').textContent = best;
+  let playing=false, score=0, timeLeft=30, spawnTimer=null, tickTimer=null;
+  const hearts = ['💛','💖','💕','❤️','💘'];
+  function startGame(){
+    playing=true; score=0; timeLeft=30;
+    gScore.textContent='0'; gTime.textContent='30'; gMsg.textContent='';
+    overlay.style.display='none';
+    arena.querySelectorAll('.gheart,.pop').forEach(e=>e.remove());
+    spawnTimer = setInterval(spawnHeart, 650);
+    tickTimer = setInterval(()=>{
+      timeLeft--; gTime.textContent = timeLeft;
+      if(timeLeft<=0) endGame();
+    },1000);
+    buzz(40);
+  }
+  function spawnHeart(){
+    if(!playing) return;
+    const h = document.createElement('div');
+    h.className='gheart'; h.textContent = hearts[(Math.random()*hearts.length)|0];
+    h.style.left = (4+Math.random()*86)+'%';
+    h.style.animationDuration = (1.6+Math.random()*1.4)+'s';
+    h.style.fontSize = (28+Math.random()*16)+'px';
+    const caught = ()=>{
+      if(!playing) return;
+      score++; gScore.textContent = score; buzz(15);
+      const p = document.createElement('div');
+      p.className='pop'; p.textContent='+1';
+      p.style.left = h.style.left; p.style.top='60%';
+      arena.appendChild(p); setTimeout(()=>p.remove(),700);
+      h.remove();
+    };
+    h.addEventListener('pointerdown', caught);
+    h.addEventListener('animationend', ()=>{ h.remove(); });
+    arena.appendChild(h);
+  }
+  function endGame(){
+    playing=false;
+    clearInterval(spawnTimer); clearInterval(tickTimer);
+    arena.querySelectorAll('.gheart').forEach(e=>e.remove());
+    let msg, title;
+    if(score < 5){ title='ani bhanchau miss garchau? 😏'; msg='score: '+score+'. feri try gara, ma wait garchu 😌'; }
+    else if(score < 15){ title='not bad, maicha! 💛'; msg='score: '+score+'. ali practice bhaye pro!'; }
+    else { title='wah! OP skill 😍'; msg='score: '+score+'!! timro maya-catching ta next level!'; }
+    if(score > best){ best = score; localStorage.setItem('maicha_best', String(best)); $('gBest').textContent = best; msg += ' 🏆 NEW BEST!'; }
+    $('gOverTitle').textContent = title;
+    $('gOverSub').textContent = 'tap gara feri khelna';
+    gStart.textContent = 'FERI KHELNE! 🎮';
+    overlay.style.display='flex';
+    gMsg.textContent = msg;
+    boom(innerWidth/2, innerHeight*0.4, 50); buzz([50,50,50]);
+  }
+  gStart.addEventListener('click', startGame);
+
+  /* ---------- MISS METER ---------- */
+  const meter = $('meter'), mVal = $('meterVal'), mWord = $('meterWord');
+  function meterText(v){
+    if(v==0) return "0?! jhut! 😒 feri ghumau ta";
+    if(v<=25) return "ali ali? thik cha, ma adjust garchu 😌";
+    if(v<=50) return "decent! ma pani tetikai miss garchu 💛";
+    if(v<=75) return "oho, serious miss! hug button mathi cha 😏";
+    if(v<=99) return "eto dherai?! aaja phone nai chodna — kura garaun na 🥺";
+    return "100%?! officially certified miss-er 🏆💛";
+  }
+  function renderMeter(){ mVal.textContent = meter.value; mWord.textContent = meterText(+meter.value); }
+  meter.addEventListener('input', ()=>{ renderMeter(); });
+  meter.addEventListener('change', ()=>{ buzz(20); if(+meter.value>=76) boom(innerWidth/2, 200, 30); });
+  renderMeter();
+})();
+</script>
+</body>
+</html>
