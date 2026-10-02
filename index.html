@@ -158,6 +158,11 @@
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
   }
+  @media (max-width:600px){
+    .marquee .track{animation-duration:64s}
+    .hug-btn{animation-duration:4s}
+    .hero h1 .wave{animation-duration:4.5s}
+  }
 </style>
 </head>
 <body>
@@ -258,7 +263,7 @@
 
   <footer>
     <div class="sig">timro lagi,<br>timro manche bata 💛<br>— siddhu</div>
-    <div class="tiny">miss bhayo bhane feri aau hai. ma yei hun chu, hamesha 😌</div>
+    <div class="tiny">miss bhayo bhane feri aau hai. ma yei hun chu, hamesha 😌<br>v4</div>
   </footer>
 </div>
 
@@ -272,13 +277,14 @@
 
   /* ---------- floating hearts ---------- */
   const floaties = $('floaties');
+  const isTouch = matchMedia('(pointer:coarse)').matches;
   const ems = ['💛','💕','💖','✨','🌸','💌'];
   for(let i=0;i<14;i++){
     const s = document.createElement('span');
     s.textContent = ems[i % ems.length];
     s.style.left = (Math.random()*100)+'vw';
     s.style.fontSize = (14+Math.random()*22)+'px';
-    s.style.animationDuration = (14+Math.random()*12)+'s';
+    s.style.animationDuration = isTouch ? (26+Math.random()*18)+'s' : (14+Math.random()*12)+'s';
     s.style.animationDelay = (Math.random()*10)+'s';
     floaties.appendChild(s);
   }
@@ -431,7 +437,7 @@
     gScore.textContent='0'; gTime.textContent='30'; gMsg.textContent='';
     overlay.style.display='none';
     arena.querySelectorAll('.gheart,.pop').forEach(e=>e.remove());
-    spawnTimer = setInterval(spawnHeart, 650);
+    spawnTimer = setInterval(spawnHeart, isTouch ? 900 : 650);
     tickTimer = setInterval(()=>{
       timeLeft--; gTime.textContent = timeLeft;
       if(timeLeft<=0) endGame();
