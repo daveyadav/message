@@ -84,6 +84,12 @@
   .hug-btn{font-size:24px;animation:pulse 3s ease-in-out infinite}
   @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
   .hug-btn:active{animation:none}
+  .hug-reset{background:none;border:none;color:var(--ink);opacity:.45;font-family:'Nunito',sans-serif;
+    font-weight:800;font-size:13px;cursor:pointer;margin:14px auto 0;display:block;
+    text-decoration:underline;text-underline-offset:3px}
+  .hug-reset:active{opacity:.85}
+  .reset-btns{display:flex;gap:10px;margin-top:20px}
+  .reset-btns .btn{font-size:16px;padding:13px 6px}
 
   /* ---------- letters ---------- */
   .env-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -197,6 +203,7 @@
     <div class="hug-label">wota hug jamma bhayo</div>
     <button class="btn btn-pink hug-btn" id="hugBtn">HUG DEU NA 🫂</button>
     <div class="hug-msg" id="hugMsg">ready chau? pahilo hug ta free ho 😌</div>
+    <button class="hug-reset" id="hugReset">↺ reset hugs</button>
   </section>
 
   <!-- LETTERS -->
@@ -212,6 +219,17 @@
       <div class="ln" id="letterNum">letter #1</div>
       <p id="letterText"></p>
       <button class="btn btn-yellow close" id="letterClose">huss 💛</button>
+    </div>
+  </div>
+
+  <div class="letter-modal" id="resetModal">
+    <div class="letter">
+      <div class="ln">hug reset 🥺</div>
+      <p id="resetText"></p>
+      <div class="reset-btns">
+        <button class="btn btn-mint" id="resetNo">nah, rakha 💛</button>
+        <button class="btn btn-pink" id="resetYes">huss, zero bata 💔</button>
+      </div>
     </div>
   </div>
 
@@ -263,7 +281,7 @@
 
   <footer>
     <div class="sig">timro lagi,<br>timro manche bata 💛<br>— siddhu</div>
-    <div class="tiny">miss bhayo bhane feri aau hai. ma yei hun chu, hamesha 😌<br>v5</div>
+    <div class="tiny">miss bhayo bhane feri aau hai. ma yei hun chu, hamesha 😌<br>v6</div>
   </footer>
 </div>
 
@@ -370,6 +388,21 @@
   $('fab').addEventListener('click', ()=>{
     document.getElementById('hug').scrollIntoView({behavior:'smooth',block:'center'});
     setTimeout(()=>hugBtn.click(), 600);
+  });
+
+  /* ---------- HUG RESET ---------- */
+  const resetModal = $('resetModal');
+  $('hugReset').addEventListener('click', ()=>{
+    $('resetText').textContent = hugs + ' wota hug udaune ho? feri thichera kamauna ta sakchhau... tara pani, pakka? 🥺';
+    resetModal.classList.add('show'); buzz(20);
+  });
+  $('resetNo').addEventListener('click', ()=>resetModal.classList.remove('show'));
+  resetModal.addEventListener('click', e=>{ if(e.target===resetModal) resetModal.classList.remove('show'); });
+  $('resetYes').addEventListener('click', ()=>{
+    hugs = 0; store.set('maicha_hugs', '0'); renderHugs();
+    hugMsg.textContent = 'lau, zero bata suru. hatharu ready para — feri thichna 😌';
+    resetModal.classList.remove('show'); buzz([40,40]);
+    boom(innerWidth/2, innerHeight*0.5, 24);
   });
 
   /* ---------- LETTERS ---------- */
