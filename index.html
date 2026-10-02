@@ -156,7 +156,7 @@
   #confetti{position:fixed;inset:0;pointer-events:none;z-index:60}
 
   @media (prefers-reduced-motion:reduce){
-    *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+    *,*::before,*::after{animation:none !important;transition:none !important}
   }
   @media (max-width:600px){
     .marquee .track{animation-duration:64s}
@@ -263,7 +263,7 @@
 
   <footer>
     <div class="sig">timro lagi,<br>timro manche bata 💛<br>— siddhu</div>
-    <div class="tiny">miss bhayo bhane feri aau hai. ma yei hun chu, hamesha 😌<br>v4</div>
+    <div class="tiny">miss bhayo bhane feri aau hai. ma yei hun chu, hamesha 😌<br>v5</div>
   </footer>
 </div>
 
@@ -274,6 +274,14 @@
   "use strict";
   const $ = id => document.getElementById(id);
   const buzz = ms => { try{ navigator.vibrate && navigator.vibrate(ms); }catch(e){} };
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* storage that survives private/blocked-storage browsers */
+  const store = {
+    mem: {},
+    get(k, d){ try{ const v = localStorage.getItem(k); return v===null?d:v; }catch(e){ return (k in this.mem)?this.mem[k]:d; } },
+    set(k, v){ this.mem[k]=v; try{ localStorage.setItem(k, v); }catch(e){} }
+  };
 
   /* ---------- floating hearts ---------- */
   const floaties = $('floaties');
@@ -296,7 +304,7 @@
 
   /* ---------- confetti ---------- */
   const cv = $('confetti'), cx = cv.getContext('2d');
-  let parts = [], raf = null;
+  let parts = [], raf = null, lastTs = 0;
   function sizeCv(){ cv.width = innerWidth; cv.height = innerHeight; }
   sizeCv(); addEventListener('resize', sizeCv);
   const cols = ['#ec4899','#fb923c','#fde047','#6ee7b7','#7dd3fc','#c4b5fd'];
@@ -306,13 +314,15 @@
         s:5+Math.random()*7, r:Math.random()*Math.PI, vr:(Math.random()-.5)*.3,
         c:cols[(Math.random()*cols.length)|0], life:70+Math.random()*40});
     }
-    if(!raf) tick();
+    if(!raf){ lastTs = 0; raf = requestAnimationFrame(tick); }
   }
-  function tick(){
+  function tick(ts){
+    const dt = Math.min(50, ts-(lastTs||ts)) / 16.667; /* frame-rate independent */
+    lastTs = ts;
     cx.clearRect(0,0,cv.width,cv.height);
     parts = parts.filter(p=>p.life>0);
     for(const p of parts){
-      p.x+=p.vx; p.y+=p.vy; p.vy+=.32; p.r+=p.vr; p.life--;
+      p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=.32*dt; p.r+=p.vr*dt; p.life-=dt;
       cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r);
       cx.globalAlpha = Math.min(1, p.life/40);
       cx.fillStyle = p.c; cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.62); cx.restore();
@@ -329,7 +339,7 @@
 
   /* ---------- HUG MACHINE ---------- */
   const hugCount = $('hugCount'), hugBtn = $('hugBtn'), hugMsg = $('hugMsg');
-  let hugs = parseInt(localStorage.getItem('maicha_hugs')||'0',10)||0;
+  let hugs = parseInt(store.get('maicha_hugs','0'),10)||0;
   const hugLines = [
     "lau, aarko hug. greedy 😌",
     "eh, kati chado chado thichiraheko... mann paryo? 😏",
@@ -351,7 +361,7 @@
   renderHugs();
   hugBtn.addEventListener('click', ()=>{
     hugs++;
-    localStorage.setItem('maicha_hugs', String(hugs));
+    store.set('maicha_hugs', String(hugs));
     renderHugs(); buzz(30);
     const r = hugBtn.getBoundingClientRect();
     boom(r.left + r.width/2, r.top, 34);
@@ -372,7 +382,7 @@
     "last ma euta secret: yo site banauda maile timilai nai samjhera banaeko. cheesy? ali ali. saancho? 100% 💛"
   ];
   const grid = $('envGrid'), modal = $('letterModal');
-  const opened = JSON.parse(localStorage.getItem('maicha_letters')||'[]');
+  const opened = JSON.parse(store.get('maicha_letters','[]'));
   function renderLetters(){
     grid.innerHTML = '';
     letters.forEach((_,i)=>{
@@ -383,7 +393,7 @@
         $('letterNum').textContent = 'letter #'+(i+1)+' 💌';
         $('letterText').textContent = letters[i];
         modal.classList.add('show'); buzz(20);
-        if(!opened.includes(i)){ opened.push(i); localStorage.setItem('maicha_letters', JSON.stringify(opened)); renderLetters(); }
+        if(!opened.includes(i)){ opened.push(i); store.set('maicha_letters', JSON.stringify(opened)); renderLetters(); }
       });
       grid.appendChild(d);
     });
@@ -428,7 +438,7 @@
   /* ---------- GAME: MAYA SAMAU ---------- */
   const arena = $('arena'), overlay = $('gOverlay'), gScore = $('gScore'),
         gTime = $('gTime'), gMsg = $('gMsg'), gStart = $('gStart');
-  let best = parseInt(localStorage.getItem('maicha_best')||'0',10)||0;
+  let best = parseInt(store.get('maicha_best','0'),10)||0;
   $('gBest').textContent = best;
   let playing=false, score=0, timeLeft=30, spawnTimer=null, tickTimer=null;
   const hearts = ['💛','💖','💕','❤️','💘'];
@@ -449,8 +459,14 @@
     const h = document.createElement('div');
     h.className='gheart'; h.textContent = hearts[(Math.random()*hearts.length)|0];
     h.style.left = (4+Math.random()*86)+'%';
-    h.style.animationDuration = (2.8+Math.random()*1.8)+'s';
     h.style.fontSize = (28+Math.random()*16)+'px';
+    if(reduceMotion){
+      /* no falling under reduced motion: hearts pop in place, stay tappable */
+      h.style.top = (8+Math.random()*70)+'%';
+      setTimeout(()=>{ h.remove(); }, 2600);
+    } else {
+      h.style.animationDuration = (2.8+Math.random()*1.8)+'s';
+    }
     const caught = ()=>{
       if(!playing) return;
       score++; gScore.textContent = score; buzz(15);
@@ -472,7 +488,7 @@
     if(score < 5){ title='ani bhanchhau miss garchhau? 😏'; msg='score: '+score+'. feri try gara na, ma parkhiraheko chu 😌'; }
     else if(score < 15){ title='not bad, maicha! 💛'; msg='score: '+score+'. ali practice gare pro!'; }
     else { title='wah! timro skill ta OP 😍'; msg='score: '+score+'!! maya-catching ta next level!'; }
-    if(score > best){ best = score; localStorage.setItem('maicha_best', String(best)); $('gBest').textContent = best; msg += ' 🏆 NAYA RECORD!'; }
+    if(score > best){ best = score; store.set('maicha_best', String(best)); $('gBest').textContent = best; msg += ' 🏆 NAYA RECORD!'; }
     $('gOverTitle').textContent = title;
     $('gOverSub').textContent = 'feri khelna tap gara';
     gStart.textContent = 'FERI KHELAM! 🎮';
