@@ -38,7 +38,7 @@
     padding:9px 18px;border-radius:999px;letter-spacing:.5px;transform:rotate(-3deg);
     box-shadow:3px 3px 0 rgba(51,36,26,.25)}
   .hero h1{font-size:56px;line-height:1.02;margin:20px 0 8px;font-weight:700;letter-spacing:-.5px}
-  .hero h1 .wave{display:inline-block;animation:wave 2.2s ease-in-out infinite;transform-origin:70% 70%}
+  .hero h1 .wave{display:inline-block;animation:wave 3.4s ease-in-out infinite;transform-origin:70% 70%}
   @keyframes wave{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(16deg)}20%{transform:rotate(-10deg)}30%{transform:rotate(14deg)}40%{transform:rotate(-6deg)}50%{transform:rotate(4deg)}}
   .hero p{font-size:17px;font-weight:600;opacity:.88;max-width:350px;margin:0 auto;line-height:1.55}
   .chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
@@ -50,7 +50,7 @@
   /* ---------- marquee ---------- */
   .marquee{position:relative;z-index:1;overflow:hidden;white-space:nowrap;margin:30px -16px 0;
     background:var(--ink);color:#fff;padding:11px 0;transform:rotate(-1.2deg) scale(1.02)}
-  .marquee .track{display:inline-block;animation:slide 16s linear infinite;font-family:'Fredoka',sans-serif;
+  .marquee .track{display:inline-block;animation:slide 32s linear infinite;font-family:'Fredoka',sans-serif;
     font-weight:600;font-size:15px;letter-spacing:1px}
   @keyframes slide{to{transform:translateX(-50%)}}
 
@@ -81,7 +81,7 @@
   .hug-label{text-align:center;font-weight:700;font-size:14px;opacity:.7;margin-bottom:14px}
   .hug-msg{min-height:58px;text-align:center;font-size:16px;font-weight:700;color:#7c2d12;
     background:#fff7ed;border:2px dashed var(--orange);border-radius:16px;padding:12px;margin-top:14px;line-height:1.45}
-  .hug-btn{font-size:24px;animation:pulse 1.8s ease-in-out infinite}
+  .hug-btn{font-size:24px;animation:pulse 3s ease-in-out infinite}
   @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
   .hug-btn:active{animation:none}
 
@@ -257,7 +257,7 @@
   <div class="marquee"><span class="track" id="marqueeTrack2"></span></div>
 
   <footer>
-    <div class="sig">timro lagi,<br>timro manche bata 💛<br>— kaza</div>
+    <div class="sig">timro lagi,<br>timro manche bata 💛<br>— siddhu</div>
     <div class="tiny">miss bhayo bhane feri aau hai. ma yei hun chu, hamesha 😌</div>
   </footer>
 </div>
@@ -278,7 +278,7 @@
     s.textContent = ems[i % ems.length];
     s.style.left = (Math.random()*100)+'vw';
     s.style.fontSize = (14+Math.random()*22)+'px';
-    s.style.animationDuration = (7+Math.random()*9)+'s';
+    s.style.animationDuration = (14+Math.random()*12)+'s';
     s.style.animationDelay = (Math.random()*10)+'s';
     floaties.appendChild(s);
   }
@@ -443,7 +443,7 @@
     const h = document.createElement('div');
     h.className='gheart'; h.textContent = hearts[(Math.random()*hearts.length)|0];
     h.style.left = (4+Math.random()*86)+'%';
-    h.style.animationDuration = (1.6+Math.random()*1.4)+'s';
+    h.style.animationDuration = (2.8+Math.random()*1.8)+'s';
     h.style.fontSize = (28+Math.random()*16)+'px';
     const caught = ()=>{
       if(!playing) return;
