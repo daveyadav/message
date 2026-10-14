@@ -3,43 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#ff8fb3">
-<title>Maicha 💛 Miss-Me Zone</title>
+<meta name="theme-color" content="#7f1d1d">
+<title>Maicha 💛 Happy Festivals!</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --pink:#ec4899; --pink-deep:#be185d; --orange:#fb923c; --yellow:#fde047;
-    --ink:#33241a; --card:#fffdf8; --mint:#6ee7b7; --sky:#7dd3fc; --lilac:#c4b5fd;
+    --maroon:#7f1d1d; --maroon-deep:#4c0519; --gold:#f59e0b; --gold-soft:#fde68a;
+    --ink:#3f1d12; --card:#fffdf8; --mint:#6ee7b7; --orange:#fb923c;
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html{scroll-behavior:smooth}
   body{
     font-family:'Nunito',system-ui,sans-serif;color:var(--ink);
     background:
-      radial-gradient(circle at 12% 8%, #ffe4e6 0 90px, transparent 91px),
-      radial-gradient(circle at 88% 22%, #fef3c7 0 70px, transparent 71px),
-      radial-gradient(circle at 8% 62%, #fce7f3 0 80px, transparent 81px),
-      radial-gradient(circle at 92% 78%, #ffedd5 0 90px, transparent 91px),
-      linear-gradient(180deg,#fff7f7 0%,#fff1f2 40%,#fffbeb 100%);
+      radial-gradient(circle at 12% 8%, #fde68a 0 90px, transparent 91px),
+      radial-gradient(circle at 88% 22%, #fecdd3 0 70px, transparent 71px),
+      radial-gradient(circle at 8% 62%, #fef3c7 0 80px, transparent 81px),
+      radial-gradient(circle at 92% 78%, #fed7aa 0 90px, transparent 91px),
+      linear-gradient(180deg,#fff7ed 0%,#fffbeb 45%,#fef3c7 100%);
     min-height:100dvh;overflow-x:hidden;
   }
   .wrap{max-width:480px;margin:0 auto;padding:0 16px 110px}
   h1,h2,h3,.chunk{font-family:'Fredoka',sans-serif}
 
   .floaties{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-  .floaties span{position:absolute;bottom:-60px;opacity:.5;animation:rise linear infinite}
+  .floaties span{position:absolute;bottom:-60px;opacity:.55;animation:rise linear infinite}
   @keyframes rise{to{transform:translateY(-112vh) rotate(40deg)}}
 
   /* ---------- hero ---------- */
-  .hero{position:relative;z-index:1;text-align:center;padding:60px 8px 6px}
-  .hero .kicker{display:inline-block;background:var(--ink);color:#fff;font-weight:800;font-size:13px;
+  .hero{position:relative;z-index:1;text-align:center;padding:56px 8px 6px}
+  .hero .kicker{display:inline-block;background:var(--maroon);color:#fff;font-weight:800;font-size:13px;
     padding:9px 18px;border-radius:999px;letter-spacing:.5px;transform:rotate(-3deg);
-    box-shadow:3px 3px 0 rgba(51,36,26,.25)}
-  .hero h1{font-size:56px;line-height:1.02;margin:20px 0 8px;font-weight:700;letter-spacing:-.5px}
-  .hero h1 .wave{display:inline-block;animation:wave 3.4s ease-in-out infinite;transform-origin:70% 70%}
-  @keyframes wave{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(16deg)}20%{transform:rotate(-10deg)}30%{transform:rotate(14deg)}40%{transform:rotate(-6deg)}50%{transform:rotate(4deg)}}
+    box-shadow:3px 3px 0 rgba(63,29,18,.25)}
+  .hero h1{font-size:50px;line-height:1.05;margin:20px 0 8px;font-weight:700;letter-spacing:-.5px}
+  .hero .dev{font-size:22px;font-weight:700;color:var(--maroon);letter-spacing:2px;margin-bottom:6px}
   .hero p{font-size:17px;font-weight:600;opacity:.88;max-width:350px;margin:0 auto;line-height:1.55}
   .chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
   .chip{font-family:'Fredoka',sans-serif;font-weight:600;font-size:14px;color:var(--ink);text-decoration:none;
@@ -49,7 +48,7 @@
 
   /* ---------- marquee ---------- */
   .marquee{position:relative;z-index:1;overflow:hidden;white-space:nowrap;margin:30px -16px 0;
-    background:var(--ink);color:#fff;padding:11px 0;transform:rotate(-1.2deg) scale(1.02)}
+    background:var(--maroon);color:#fff;padding:11px 0;transform:rotate(-1.2deg) scale(1.02)}
   .marquee .track{display:inline-block;animation:slide 32s linear infinite;font-family:'Fredoka',sans-serif;
     font-weight:600;font-size:15px;letter-spacing:1px}
   @keyframes slide{to{transform:translateX(-50%)}}
@@ -59,8 +58,10 @@
     border-radius:28px;padding:26px 20px 24px;margin-top:26px;box-shadow:6px 6px 0 var(--ink);
     opacity:0;transform:translateY(26px);transition:opacity .5s ease,transform .5s ease}
   section.card.shown{opacity:1;transform:none}
+  section.card.dark{background:linear-gradient(160deg,#7f1d1d,#4c0519);color:#fff;border-color:#2b0a0a}
+  section.card.dark .sub{opacity:.85}
   .stag{display:inline-block;font-family:'Fredoka',sans-serif;font-size:12px;font-weight:600;letter-spacing:1.5px;
-    text-transform:uppercase;background:var(--yellow);border:2px solid var(--ink);border-radius:999px;
+    text-transform:uppercase;background:var(--gold-soft);border:2px solid var(--ink);border-radius:999px;
     padding:4px 12px;margin-bottom:12px;box-shadow:2px 2px 0 var(--ink)}
   .card h2{font-size:26px;margin-bottom:4px;letter-spacing:-.3px}
   .card .sub{font-size:15px;font-weight:600;opacity:.75;margin-bottom:18px;line-height:1.5}
@@ -71,79 +72,66 @@
     padding:16px;cursor:pointer;box-shadow:4px 4px 0 var(--ink);
     transition:transform .08s ease,box-shadow .08s ease;user-select:none;text-align:center}
   .btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+  .btn-gold{background:linear-gradient(135deg,#fde68a,#f59e0b)}
   .btn-pink{background:linear-gradient(135deg,#f9a8d4,#f472b6)}
-  .btn-yellow{background:linear-gradient(135deg,#fde68a,#fbbf24)}
   .btn-mint{background:linear-gradient(135deg,#a7f3d0,#6ee7b7)}
-  .btn-sky{background:linear-gradient(135deg,#bae6fd,#7dd3fc)}
+  .btn-maroon{background:linear-gradient(135deg,#b91c1c,#7f1d1d);color:#fff}
 
-  /* ---------- hug machine ---------- */
-  .hug-count{font-family:'Fredoka',sans-serif;font-size:46px;font-weight:700;color:var(--pink-deep);text-align:center;margin:4px 0 2px}
-  .hug-label{text-align:center;font-weight:700;font-size:14px;opacity:.7;margin-bottom:14px}
-  .hug-msg{min-height:58px;text-align:center;font-size:16px;font-weight:700;color:#7c2d12;
-    background:#fff7ed;border:2px dashed var(--orange);border-radius:16px;padding:12px;margin-top:14px;line-height:1.45}
-  .hug-btn{font-size:24px;animation:pulse 3s ease-in-out infinite}
-  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
-  .hug-btn:active{animation:none}
-  .hug-reset{background:none;border:none;color:var(--ink);opacity:.45;font-family:'Nunito',sans-serif;
-    font-weight:800;font-size:13px;cursor:pointer;margin:14px auto 0;display:block;
+  /* ---------- music ---------- */
+  .music-note{font-size:14px;font-weight:700;opacity:.8;margin-top:10px;min-height:20px}
+  #ytPlayer{border-radius:16px;overflow:hidden;margin-top:14px;border:3px solid rgba(255,255,255,.25);min-height:60px}
+  #ytPlayer:empty{display:none}
+  .yt-link{display:block;text-align:center;margin-top:10px;font-size:13px;font-weight:800;color:var(--gold-soft);text-decoration:none}
+
+  /* ---------- countdown ---------- */
+  .count-row{display:flex;gap:10px;justify-content:center;margin:6px 0 10px}
+  .count-box{background:#fff;border:3px solid var(--ink);border-radius:18px;box-shadow:3px 3px 0 var(--ink);
+    padding:12px 6px;min-width:72px;text-align:center}
+  .count-box b{display:block;font-family:'Fredoka',sans-serif;font-size:30px;color:var(--maroon);line-height:1}
+  .count-box span{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;opacity:.6}
+  .count-label{text-align:center;font-family:'Fredoka',sans-serif;font-size:18px;font-weight:600;color:var(--maroon)}
+
+  /* ---------- tika ---------- */
+  .tika-stage{text-align:center;min-height:132px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+    background:#fff7ed;border:2px dashed var(--orange);border-radius:18px;padding:16px;margin-bottom:14px}
+  .tika-stage .tika-mark{font-size:52px;line-height:1}
+  .tika-stage .bless{font-size:16px;font-weight:700;line-height:1.5;max-width:320px}
+  .tika-stage .idle{font-size:15px;font-weight:700;opacity:.6}
+
+  /* ---------- diya ---------- */
+  .diya-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .diya{border:3px solid var(--ink);border-radius:18px;background:#fff;padding:14px 6px;text-align:center;
+    cursor:pointer;box-shadow:3px 3px 0 var(--ink);transition:transform .08s;font-size:38px;line-height:1;filter:grayscale(1);opacity:.45}
+  .diya:active{transform:scale(.94)}
+  .diya.lit{filter:none;opacity:1;background:linear-gradient(180deg,#fffbeb,#fde68a);
+    box-shadow:0 0 24px rgba(245,158,11,.75), 3px 3px 0 var(--ink);animation:glow 2.2s ease-in-out infinite}
+  @keyframes glow{0%,100%{box-shadow:0 0 18px rgba(245,158,11,.6), 3px 3px 0 var(--ink)}50%{box-shadow:0 0 34px rgba(245,158,11,.95), 3px 3px 0 var(--ink)}}
+  .diya-msg{text-align:center;font-weight:700;font-size:16px;min-height:48px;margin-top:14px;color:#7c2d12;line-height:1.5}
+  .diya-reset{background:none;border:none;color:var(--ink);opacity:.45;font-family:'Nunito',sans-serif;
+    font-weight:800;font-size:13px;cursor:pointer;margin:10px auto 0;display:block;
     text-decoration:underline;text-underline-offset:3px}
-  .hug-reset:active{opacity:.85}
-  .reset-btns{display:flex;gap:10px;margin-top:20px}
-  .reset-btns .btn{font-size:16px;padding:13px 6px}
 
-  /* ---------- letters ---------- */
-  .env-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .env{border:3px solid var(--ink);border-radius:18px;background:#fff;padding:14px 8px;text-align:center;
-    cursor:pointer;box-shadow:3px 3px 0 var(--ink);transition:transform .08s;min-height:112px;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
-  .env:active{transform:scale(.96)}
-  .env .e{font-size:34px}
-  .env .t{font-family:'Fredoka',sans-serif;font-weight:600;font-size:14px}
-  .env.opened{background:#fef9c3}
-  .letter-modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:24px;
-    background:rgba(51,36,26,.55);backdrop-filter:blur(3px)}
-  .letter-modal.show{display:flex}
-  .letter{background:#fffdf5;border:3px solid var(--ink);border-radius:24px;box-shadow:8px 8px 0 var(--ink);
-    max-width:400px;width:100%;padding:28px 22px;transform:scale(.8) rotate(-2deg);
-    transition:transform .25s cubic-bezier(.34,1.56,.64,1);max-height:70dvh;overflow:auto}
-  .letter-modal.show .letter{transform:scale(1) rotate(-1deg)}
-  .letter .ln{font-family:'Fredoka',sans-serif;font-size:13px;color:var(--pink-deep);margin-bottom:10px;letter-spacing:1px}
-  .letter p{font-size:17px;font-weight:600;line-height:1.6}
-  .letter .close{margin-top:18px}
+  /* ---------- festival cards ---------- */
+  .fest-grid{display:flex;flex-direction:column;gap:14px}
+  .fest{background:#fff;border:3px solid var(--ink);border-radius:20px;padding:18px;box-shadow:4px 4px 0 var(--ink)}
+  .fest .f-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .fest h3{font-size:22px}
+  .fest .f-dev{font-size:16px;font-weight:700;color:var(--maroon)}
+  .fest .f-date{font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--maroon);opacity:.7;margin:4px 0 8px}
+  .fest p{font-size:15px;font-weight:600;line-height:1.55}
 
-  /* ---------- roast machine ---------- */
-  .slot{background:#33241a;color:#fff;border-radius:18px;padding:24px 16px;text-align:center;min-height:126px;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin-bottom:14px;
-    border:3px solid var(--ink)}
-  .slot .tag{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
-    background:#fff;color:var(--ink);padding:4px 12px;border-radius:999px}
-  .slot .line{font-size:18px;font-weight:700;line-height:1.5}
-  .slot .idle{opacity:.5;font-size:15px}
-
-  /* ---------- game ---------- */
-  .game-arena{position:relative;height:320px;border:3px solid var(--ink);border-radius:18px;
-    background:linear-gradient(180deg,#fce7f3,#fff7ed);overflow:hidden;margin-bottom:14px;touch-action:none}
-  .game-arena .gheart{position:absolute;top:-50px;cursor:pointer;user-select:none;animation:fall linear forwards}
-  @keyframes fall{to{transform:translateY(400px) rotate(30deg)}}
-  .game-arena .pop{position:absolute;font-family:'Fredoka',sans-serif;font-weight:700;color:var(--pink-deep);
-    animation:popfade .7s ease-out forwards;pointer-events:none;font-size:20px}
-  @keyframes popfade{to{transform:translateY(-34px);opacity:0}}
-  .game-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;
-    font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px}
-  .game-hud b{color:var(--pink-deep)}
-  .game-msg{text-align:center;font-weight:700;font-size:16px;min-height:48px;margin-top:12px;color:#7c2d12;line-height:1.5}
-  .game-overlay{position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;
-    background:rgba(255,253,248,.9);z-index:2;padding:20px;text-align:center}
-  .game-overlay h3{font-size:24px}
-  .game-overlay p{font-weight:600;font-size:15px;opacity:.8}
-  .game-overlay .btn{width:auto;padding:12px 34px;font-size:18px}
+  /* ---------- wish letter ---------- */
+  .wish{background:#fffdf5;border:3px solid var(--ink);border-radius:24px;box-shadow:6px 6px 0 var(--ink);padding:26px 22px}
+  .wish .ln{font-family:'Fredoka',sans-serif;font-size:13px;color:var(--maroon);margin-bottom:12px;letter-spacing:1px}
+  .wish p{font-size:17px;font-weight:600;line-height:1.65}
+  .wish .sign{font-family:'Fredoka',sans-serif;font-size:18px;font-weight:600;margin-top:14px}
 
   /* ---------- meter ---------- */
   .meter-out{text-align:center;margin:6px 0 16px}
-  .meter-val{font-family:'Fredoka',sans-serif;font-size:54px;font-weight:700;color:var(--pink-deep)}
+  .meter-val{font-family:'Fredoka',sans-serif;font-size:54px;font-weight:700;color:var(--maroon)}
   .meter-word{font-size:17px;font-weight:800;margin-top:2px;min-height:30px;line-height:1.4}
   input[type=range]{width:100%;appearance:none;-webkit-appearance:none;height:18px;border-radius:999px;
-    background:linear-gradient(90deg,#fde68a,#fb923c,#ec4899);border:3px solid var(--ink);outline:none;margin:6px 0 4px}
+    background:linear-gradient(90deg,#fde68a,#fb923c,#dc2626);border:3px solid var(--ink);outline:none;margin:6px 0 4px}
   input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:38px;height:38px;border-radius:50%;
     background:#fff;border:3px solid var(--ink);box-shadow:2px 2px 0 var(--ink);cursor:pointer}
   input[type=range]::-moz-range-thumb{width:34px;height:34px;border-radius:50%;background:#fff;border:3px solid var(--ink);cursor:pointer}
@@ -154,7 +142,7 @@
   footer .tiny{font-size:13px;font-weight:600;opacity:.6;margin-top:10px}
 
   .fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:40;
-    width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#f9a8d4,#ec4899);
+    width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#fde68a,#f59e0b);
     border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font-size:30px;cursor:pointer;
     display:flex;align-items:center;justify-content:center;transition:transform .1s}
   .fab:active{transform:scale(.9)}
@@ -166,8 +154,7 @@
   }
   @media (max-width:600px){
     .marquee .track{animation-duration:64s}
-    .hug-btn{animation-duration:4s}
-    .hero h1 .wave{animation-duration:4.5s}
+    .hero h1{font-size:46px}
   }
 </style>
 </head>
@@ -180,95 +167,107 @@
 
   <!-- HERO -->
   <div class="hero">
-    <span class="kicker">Timrai lagi matra hai 💌</span>
-    <h1>Maicha!! <span class="wave">👋</span></h1>
-    <p>K cha? Miss bhairacha? Aww, don't worry—ma yei chu ni. Tala jaam ta, timro lagi strict-ly ramailo stuff banako chu 😌</p>
+    <span class="kicker">Dashain • Tihar • Chhath 💛</span>
+    <h1>Happy Festivals,<br>Maicha! 🪔</h1>
+    <div class="dev">दशैं • तिहार • छठ</div>
+    <p>Dashain, Tihar, Chhath — tinnai festival ko dherai dherai shubhakamana, Maicha! Timro lagi matra hai 💛</p>
     <div class="chips">
-      <a class="chip" href="#hug">🤗 Hugs</a>
-      <a class="chip" href="#letters">💌 Letters</a>
-      <a class="chip" href="#roast">🎰 Kismat</a>
-      <a class="chip" href="#game">🎮 Game</a>
-      <a class="chip" href="#meter">📊 Meter</a>
+      <a class="chip" href="#music">🎵 Dhun</a>
+      <a class="chip" href="#tika">🙏 Tika</a>
+      <a class="chip" href="#diya">🪔 Diya</a>
+      <a class="chip" href="#festivals">🎉 Festivals</a>
+      <a class="chip" href="#meter">📊 Miss Meter</a>
     </div>
   </div>
 
   <div class="marquee"><span class="track" id="marqueeTrack"></span></div>
 
-  <!-- HUG MACHINE -->
-  <section class="card" id="hug">
-    <span class="stag">01 · Hug</span>
-    <h2>🤗 Virtual Hug Machine</h2>
-    <div class="sub">Button thichda, hug pauchhau. Jati thichchau, teti dherai maya 😌</div>
-    <div class="hug-count" id="hugCount">0</div>
-    <div class="hug-label">wota hug jamma bhayo</div>
-    <button class="btn btn-pink hug-btn" id="hugBtn">HUG DEU NA 🫂</button>
-    <div class="hug-msg" id="hugMsg">Ready chau? First hug ta free ho hai 😌</div>
-    <button class="hug-reset" id="hugReset">↺ Reset hugs</button>
+  <!-- MUSIC -->
+  <section class="card dark" id="music">
+    <span class="stag">🎵 music</span>
+    <h2>Dashain Dhun</h2>
+    <div class="sub">Malshree Dhun — the sound of Dashain. Tap play, let it fill the room 🎶</div>
+    <button class="btn btn-gold" id="musicBtn">▶ Play Dashain Dhun</button>
+    <div id="ytPlayer"></div>
+    <a class="yt-link" href="https://www.youtube.com/watch?v=ZO86WGyA22s" target="_blank" rel="noopener">Watch Malshree Dhun on YouTube ↗</a>
+    <div class="music-note" id="musicNote"></div>
   </section>
 
-  <!-- LETTERS -->
-  <section class="card" id="letters">
-    <span class="stag">02 · Letters</span>
-    <h2>💌 Miss Garda Kholne</h2>
-    <div class="sub">Euta khola, mood cha bhane sabai khola. <span id="letterProg">0/6 kholisakyou</span></div>
-    <div class="env-grid" id="envGrid"></div>
-  </section>
-
-  <div class="letter-modal" id="letterModal">
-    <div class="letter">
-      <div class="ln" id="letterNum">letter #1</div>
-      <p id="letterText"></p>
-      <button class="btn btn-yellow close" id="letterClose">Huss 💛</button>
+  <!-- COUNTDOWN -->
+  <section class="card" id="countdown">
+    <span class="stag">⏳ countdown</span>
+    <h2>Next Festival</h2>
+    <div class="count-label" id="countLabel">Dashain Tika • Oct 21</div>
+    <div class="count-row">
+      <div class="count-box"><b id="cdD">0</b><span>days</span></div>
+      <div class="count-box"><b id="cdH">0</b><span>hours</span></div>
+      <div class="count-box"><b id="cdM">0</b><span>mins</span></div>
+      <div class="count-box"><b id="cdS">0</b><span>secs</span></div>
     </div>
-  </div>
+    <div class="sub" style="text-align:center;margin-bottom:0">Dashain is ON right now (Oct 11–25) — Tika Day Oct 21, Tihar Nov 7–11, Chhath Nov 13–16</div>
+  </section>
 
-  <div class="letter-modal" id="resetModal">
-    <div class="letter">
-      <div class="ln">Hug reset garne ho? 🥺</div>
-      <p id="resetText"></p>
-      <div class="reset-btns">
-        <button class="btn btn-mint" id="resetNo">Nah, rakhau 💛</button>
-        <button class="btn btn-pink" id="resetYes">Um, zero bata 💔</button>
+  <!-- TIKA -->
+  <section class="card" id="tika">
+    <span class="stag">🙏 blessings</span>
+    <h2>Tika &amp; Aashirbad</h2>
+    <div class="sub">Button thicha, tika lagau — ani euta aashirbad receive gara 💛</div>
+    <div class="tika-stage" id="tikaStage">
+      <div class="idle">Tika ready cha... thicha na 🙏</div>
+    </div>
+    <button class="btn btn-maroon" id="tikaBtn">Tika Lagau 🙏</button>
+  </section>
+
+  <!-- DIYA -->
+  <section class="card" id="diya">
+    <span class="stag">🪔 lights</span>
+    <h2>Diyo Balau</h2>
+    <div class="sub">Tap garera diyo balau. <span id="diyaProg">0/9 diyo balyo</span></div>
+    <div class="diya-grid" id="diyaGrid"></div>
+    <div class="diya-msg" id="diyaMsg"></div>
+    <button class="diya-reset" id="diyaReset">↺ sabai diyo nibau</button>
+  </section>
+
+  <!-- FESTIVALS -->
+  <section class="card" id="festivals">
+    <span class="stag">🎉 festivals</span>
+    <h2>Tinnai Chad, Timro Lagi</h2>
+    <div class="sub">Teen chad, teen wishes — sabai timro lagi 💛</div>
+    <div class="fest-grid">
+      <div class="fest">
+        <div class="f-head"><h3>🌾 Dashain</h3><span class="f-dev">दशैं</span></div>
+        <div class="f-date">Oct 11–25 • Tika Day Oct 21</div>
+        <p>Tika, jamara, kites, swings, and aashirbad — Dashain is here, and you're the first person I thought of 💛</p>
+      </div>
+      <div class="fest">
+        <div class="f-head"><h3>🪔 Tihar</h3><span class="f-dev">तिहार</span></div>
+        <div class="f-date">Nov 7–11 • Laxmi Puja Nov 8 • Bhai Tika Nov 11</div>
+        <p>Diyo, deusi, bhailo, and Bhai Tika — Tihar ko ujyalo ma timro muskaan sabai bhanda bright hos ✨</p>
+      </div>
+      <div class="fest">
+        <div class="f-head"><h3>🌅 Chhath</h3><span class="f-dev">छठ</span></div>
+        <div class="f-date">Nov 13–16 • Sandhya Arghya Nov 15</div>
+        <p>Surya arghya, thekua, and Chhath ghat — may the rising sun bless you with everything good 🌅</p>
       </div>
     </div>
-  </div>
-
-  <!-- ROAST / COMPLIMENT -->
-  <section class="card" id="roast">
-    <span class="stag">03 · Kismat</span>
-    <h2>🎰 Compliment ki Roast?</h2>
-    <div class="sub">Button thicha, luck try gara. Roast bhae ni cute wala ho 😈</div>
-    <div class="slot" id="slot">
-      <div class="idle">Ready chau bhane thicha na... 👀</div>
-    </div>
-    <button class="btn btn-yellow" id="roastBtn">LUCK TRY GARA 🎲</button>
   </section>
 
-  <!-- GAME -->
-  <section class="card" id="game">
-    <span class="stag">04 · Game</span>
-    <h2>💘 Maya Samau</h2>
-    <div class="sub">30 seconds cha. Khasne hearts haru catch gara—jati catch garchhau, teti maya!</div>
-    <div class="game-hud">
-      <span>⭐ Score: <b id="gScore">0</b></span>
-      <span>⏱️ Time: <b id="gTime">30</b>s</span>
-      <span>🏆 Best: <b id="gBest">0</b></span>
+  <!-- WISH LETTER -->
+  <section class="card">
+    <span class="stag">💌 my wish</span>
+    <h2>Festival Wish for You</h2>
+    <div class="wish">
+      <div class="ln">for maicha, with love 💛</div>
+      <p>Maicha, Dashain, Tihar, Chhath — tinnai chad ma mero euta matra wish cha: timi khusi hos, timro muskaan hamesha yestai rahos. Tika ko din ma timilai samjhiraheko hunchu, Tihar ko diyo ma timro naam ko euta diyo balauchu, Chhath ko surya sanga timro lagi aashirbad magchu. Ani sabai bhanda thulo kura — timi. 💛</p>
+      <div class="sign">— Siddhu</div>
     </div>
-    <div class="game-arena" id="arena">
-      <div class="game-overlay" id="gOverlay">
-        <h3 id="gOverTitle">Ready chau, maicha? 😏</h3>
-        <p id="gOverSub">Hearts haru tala khaschan—tap garera catch gara!</p>
-        <button class="btn btn-mint" id="gStart">KHELAM! 🎮</button>
-      </div>
-    </div>
-    <div class="game-msg" id="gMsg"></div>
   </section>
 
   <!-- MISS METER -->
   <section class="card" id="meter">
-    <span class="stag">05 · Meter</span>
-    <h2>📊 Aaja ko Miss Meter</h2>
-    <div class="sub">Slider ghumaa. Honestly bhana hai, ma judge gardina 😌</div>
+    <span class="stag">📊 miss meter</span>
+    <h2>Festival Miss Meter</h2>
+    <div class="sub">Chad ma pani miss? Slider ghumaa. Honestly bhana hai, ma judge gardina 😌</div>
     <div class="meter-out">
       <div class="meter-val"><span id="meterVal">50</span>%</div>
       <div class="meter-word" id="meterWord"></div>
@@ -281,11 +280,11 @@
 
   <footer>
     <div class="sig">Timro lagi,<br>Timrai manche bata 💛<br>— Siddhu</div>
-    <div class="tiny">Miss bhayo bhane feri aau hai. Ma yei hunchu, always 😌<br>v10</div>
+    <div class="tiny">Dashain, Tihar, Chhath — tinnai chad ma timilai dherai dherai maya 💛<br>v11</div>
   </footer>
 </div>
 
-<button class="fab" id="fab" aria-label="hug">🤗</button>
+<button class="fab" id="fab" aria-label="music">🎵</button>
 
 <script>
 (function(){
@@ -293,18 +292,11 @@
   const $ = id => document.getElementById(id);
   const buzz = ms => { try{ navigator.vibrate && navigator.vibrate(ms); }catch(e){} };
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* storage that survives private/blocked-storage browsers */
-  const store = {
-    mem: {},
-    get(k, d){ try{ const v = localStorage.getItem(k); return v===null?d:v; }catch(e){ return (k in this.mem)?this.mem[k]:d; } },
-    set(k, v){ this.mem[k]=v; try{ localStorage.setItem(k, v); }catch(e){} }
-  };
-
-  /* ---------- floating hearts ---------- */
-  const floaties = $('floaties');
   const isTouch = matchMedia('(pointer:coarse)').matches;
-  const ems = ['💛','💕','💖','✨','🌸','💌'];
+
+  /* ---------- floating diyas & flowers ---------- */
+  const floaties = $('floaties');
+  const ems = ['🪔','🌼','✨','💛','🌸','🪔'];
   for(let i=0;i<14;i++){
     const s = document.createElement('span');
     s.textContent = ems[i % ems.length];
@@ -316,7 +308,7 @@
   }
 
   /* ---------- marquee ---------- */
-  const strip = 'MAICHA 💛 MISS YOU 💛 MAICHA 💛 MISS YOU 💛 MAICHA 💛 MISS YOU 💛 ';
+  const strip = 'HAPPY DASHAIN 💛 HAPPY TIHAR 💛 HAPPY CHHATH 💛 HAPPY DASHAIN 💛 HAPPY TIHAR 💛 HAPPY CHHATH 💛 ';
   $('marqueeTrack').textContent = strip + strip;
   $('marqueeTrack2').textContent = strip + strip;
 
@@ -325,7 +317,7 @@
   let parts = [], raf = null, lastTs = 0;
   function sizeCv(){ cv.width = innerWidth; cv.height = innerHeight; }
   sizeCv(); addEventListener('resize', sizeCv);
-  const cols = ['#ec4899','#fb923c','#fde047','#6ee7b7','#7dd3fc','#c4b5fd'];
+  const cols = ['#f59e0b','#dc2626','#fde047','#6ee7b7','#f9a8d4','#fb923c'];
   function boom(x, y, n){
     for(let i=0;i<(n||40);i++){
       parts.push({x:x, y:y, vx:(Math.random()-.5)*11, vy:Math.random()*-9-2,
@@ -355,185 +347,129 @@
   },{threshold:.12});
   document.querySelectorAll('section.card').forEach(c=>io.observe(c));
 
-  /* ---------- HUG MACHINE ---------- */
-  const hugCount = $('hugCount'), hugBtn = $('hugBtn'), hugMsg = $('hugMsg');
-  let hugs = parseInt(store.get('maicha_hugs','0'),10)||0;
-  const hugLines = [
-    "Lau, arko hug! Kati greedy ho 😌",
-    "Eh, kati chado-chado thicheko... Mann paryo kya ho? 😏",
-    "Hug deliver bhayo! Feel bhayo ki nai? 🫂",
-    "Pugyo ki ajhai chahiyo? 👀",
-    "Yo hug ma extra maya free bonus 🎁",
-    "Kati warm hug! Full practice gareko jasto cha 😄",
-    "Note: Yo hug ko expiry date nai chaina 💛",
-    "Take another! Timro lagi stock unlimited cha 📦"
-  ];
-  const milestones = {
-    10:"10 wota!! Official hug-addict ho timi 😂",
-    25:"25 wota! Phone nai angaale jasto feel bhae sakyo 😭",
-    50:"50!! Maicha, timro hug-budget sakkiyo... Just kidding, unlimited cha 😌",
-    100:"100 wota hug! Absolute LEGEND 🏆💛",
-    200:"200?! Yo ta world record nai bhayo baabaa 🏅"
-  };
-  function renderHugs(){ hugCount.textContent = hugs; }
-  renderHugs();
-  hugBtn.addEventListener('click', ()=>{
-    hugs++;
-    store.set('maicha_hugs', String(hugs));
-    renderHugs(); buzz(30);
-    const r = hugBtn.getBoundingClientRect();
-    boom(r.left + r.width/2, r.top, 34);
-    hugMsg.textContent = milestones[hugs] || hugLines[(Math.random()*hugLines.length)|0];
-  });
-  $('fab').addEventListener('click', ()=>{
-    document.getElementById('hug').scrollIntoView({behavior:'smooth',block:'center'});
-    setTimeout(()=>hugBtn.click(), 600);
-  });
-
-  /* ---------- HUG RESET ---------- */
-  const resetModal = $('resetModal');
-  $('hugReset').addEventListener('click', ()=>{
-    $('resetText').textContent = hugs + ' wota hug udaune ho ta? Feri thichera kamauna sakchhau... But still, pakka ho? 🥺';
-    resetModal.classList.add('show'); buzz(20);
-  });
-  $('resetNo').addEventListener('click', ()=>resetModal.classList.remove('show'));
-  resetModal.addEventListener('click', e=>{ if(e.target===resetModal) resetModal.classList.remove('show'); });
-  $('resetYes').addEventListener('click', ()=>{
-    hugs = 0; store.set('maicha_hugs', '0'); renderHugs();
-    hugMsg.textContent = "Lau, zero bata start. Hands ready rakha—feri thichna 😌";
-    resetModal.classList.remove('show'); buzz([40,40]);
-    boom(innerWidth/2, innerHeight*0.5, 24);
-  });
-
-  /* ---------- LETTERS ---------- */
-  const letters = [
-    "Remember hamro first hello? Kasle socheko thiyo—tyo single hello le aaja samma yesto bond lyauncha bhanera 💛",
-    "Timi online aako dekhne bittikai mero mood full charge huncha—phone ko battery jastai 🔋😌",
-    "Miss bhayo bhane do one thing: deep breath leu, ani samjha—kohi timilai random-ly samjhirahecha. (Hint: Me 😌)",
-    "Timi haasda... well, dekheko ta chaina, tara text mai feel huncha—timro 'hahaha' ma timro exact haaso suney jasto lagcha 😄",
-    "Today's fact: Miss garne lai pani miss garincha. So technically, hamro miss-miss equal. Hisaab clear 🤝😂",
-    "Last ma euta secret: Yo site banauda I was purely thinking about you. Cheesy? A bit. True? 100% 💛"
-  ];
-  const grid = $('envGrid'), modal = $('letterModal');
-  const opened = JSON.parse(store.get('maicha_letters','[]'));
-  function renderLetters(){
-    grid.innerHTML = '';
-    letters.forEach((_,i)=>{
-      const d = document.createElement('div');
-      d.className = 'env' + (opened.includes(i)?' opened':'');
-      d.innerHTML = '<div class="e">'+(opened.includes(i)?'💌':'✉️')+'</div><div class="t">letter '+(i+1)+'</div>';
-      d.addEventListener('click', ()=>{
-        $('letterNum').textContent = 'letter #'+(i+1)+' 💌';
-        $('letterText').textContent = letters[i];
-        modal.classList.add('show'); buzz(20);
-        if(!opened.includes(i)){ opened.push(i); store.set('maicha_letters', JSON.stringify(opened)); renderLetters(); }
+  /* ---------- MUSIC: Malshree Dhun (YouTube) ---------- */
+  let ytPlayer = null, musicOn = false;
+  const musicBtn = $('musicBtn'), musicNote = $('musicNote');
+  function updateMusicBtn(){
+    musicBtn.textContent = musicOn ? '⏸ Pause Dhun' : '▶ Play Dashain Dhun';
+  }
+  window.onYouTubeIframeAPIReady = function(){
+    try{
+      ytPlayer = new YT.Player('ytPlayer', {
+        height:'180', width:'100%', videoId:'ZO86WGyA22s',
+        playerVars:{rel:0, modestbranding:1, playsinline:1},
+        events:{ onStateChange:function(e){
+          if(e.data === YT.PlayerState.PLAYING){ musicOn = true; musicNote.textContent = 'Malshree Dhun bajiraheko cha 🎶'; }
+          if(e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED){ musicOn = false; musicNote.textContent = ''; }
+          updateMusicBtn();
+        }}
       });
-      grid.appendChild(d);
-    });
-    $('letterProg').textContent = opened.length + '/' + letters.length + ' kholisakyou';
+    }catch(e){}
+  };
+  function toggleMusic(){
+    if(!ytPlayer){ musicNote.textContent = 'Music load hudai cha, ek chhin pachi try gara 🎶'; return; }
+    try{
+      if(musicOn){ ytPlayer.pauseVideo(); }
+      else { ytPlayer.playVideo(); buzz(20); }
+    }catch(e){}
   }
-  renderLetters();
-  $('letterClose').addEventListener('click', ()=>modal.classList.remove('show'));
-  modal.addEventListener('click', e=>{ if(e.target===modal) modal.classList.remove('show'); });
-
-  /* ---------- ROAST / COMPLIMENT ---------- */
-  const compliments = [
-    "Timro 'good morning' le mero pura day set huncha. No cap 💛",
-    "Timi jasto manche pauna genuinely luck chahinchha. Guess I got lucky 😌",
-    "Timi bina group chat aadha funny matra huncha. Facts 😌",
-    "Timro typing speed dekhera impress—sense of humor dekhera ta झन् impress 😄",
-    "Timisanga kura garda time kata gayo tha nai hudaina. Magic ho ki k ho? ✨"
-  ];
-  const roasts = [
-    "Timi online aayera 'seen' garera chhadne bani... K ho maicha? 😏",
-    "Timro reply aunjel maile ta bhat nai pakayera khaisake 🍚😭",
-    "Timisanga jhagada garna sakdina—timi jitchhau, ma surrender garihalchu 😌",
-    "'Maicha' ko real meaning: 'Maicha ko reply chai kahile aauchha?' 😂",
-    "Timro last seen ra mero patience—duitai test hudaichan 😈"
-  ];
-  const slot = $('slot');
-  $('roastBtn').addEventListener('click', ()=>{
-    buzz(25);
-    const isRoast = Math.random() < .45;
-    const line = isRoast ? roasts[(Math.random()*roasts.length)|0]
-                         : compliments[(Math.random()*compliments.length)|0];
-    let n = 0;
-    const spin = setInterval(()=>{
-      slot.innerHTML = '<div class="tag">🎰 Ghumdai cha...</div><div class="line idle">.</div>';
-      if(++n > 5){
-        clearInterval(spin);
-        slot.innerHTML = '<div class="tag">'+(isRoast?'😈 roast (cute wala)':'💛 compliment')+'</div><div class="line">'+line+'</div>';
-        boom(innerWidth/2, innerHeight*0.35, 24);
-      }
-    }, 90);
+  musicBtn.addEventListener('click', toggleMusic);
+  $('fab').addEventListener('click', ()=>{
+    document.getElementById('music').scrollIntoView({behavior:'smooth',block:'center'});
+    setTimeout(toggleMusic, 600);
   });
 
-  /* ---------- GAME: MAYA SAMAU ---------- */
-  const arena = $('arena'), overlay = $('gOverlay'), gScore = $('gScore'),
-        gTime = $('gTime'), gMsg = $('gMsg'), gStart = $('gStart');
-  let best = parseInt(store.get('maicha_best','0'),10)||0;
-  $('gBest').textContent = best;
-  let playing=false, score=0, timeLeft=30, spawnTimer=null, tickTimer=null;
-  const hearts = ['💛','💖','💕','❤️','💘'];
-  function startGame(){
-    playing=true; score=0; timeLeft=30;
-    gScore.textContent='0'; gTime.textContent='30'; gMsg.textContent='';
-    overlay.style.display='none';
-    arena.querySelectorAll('.gheart,.pop').forEach(e=>e.remove());
-    spawnTimer = setInterval(spawnHeart, isTouch ? 900 : 650);
-    tickTimer = setInterval(()=>{
-      timeLeft--; gTime.textContent = timeLeft;
-      if(timeLeft<=0) endGame();
-    },1000);
-    buzz(40);
+  /* ---------- COUNTDOWN ---------- */
+  const fests = [
+    {label:'Dashain Tika • Oct 21', date:'2026-10-21T00:00:00+05:45'},
+    {label:'Tihar • Nov 7', date:'2026-11-07T00:00:00+05:45'},
+    {label:'Chhath • Nov 13', date:'2026-11-13T00:00:00+05:45'}
+  ];
+  function nextFest(){
+    const now = new Date();
+    for(const f of fests){ if(new Date(f.date) > now) return f; }
+    return null;
   }
-  function spawnHeart(){
-    if(!playing) return;
-    const h = document.createElement('div');
-    h.className='gheart'; h.textContent = hearts[(Math.random()*hearts.length)|0];
-    h.style.left = (4+Math.random()*86)+'%';
-    h.style.fontSize = (28+Math.random()*16)+'px';
-    if(reduceMotion){
-      /* no falling under reduced motion: hearts pop in place, stay tappable */
-      h.style.top = (8+Math.random()*70)+'%';
-      setTimeout(()=>{ h.remove(); }, 2600);
-    } else {
-      h.style.animationDuration = (2.8+Math.random()*1.8)+'s';
+  function renderCountdown(){
+    const f = nextFest();
+    if(!f){
+      $('countLabel').textContent = 'Festival season complete 💛';
+      $('cdD').textContent = $('cdH').textContent = $('cdM').textContent = $('cdS').textContent = '—';
+      return;
     }
-    const caught = ()=>{
-      if(!playing) return;
-      score++; gScore.textContent = score; buzz(15);
-      const p = document.createElement('div');
-      p.className='pop'; p.textContent='+1';
-      p.style.left = h.style.left; p.style.top='60%';
-      arena.appendChild(p); setTimeout(()=>p.remove(),700);
-      h.remove();
-    };
-    h.addEventListener('pointerdown', caught);
-    h.addEventListener('animationend', ()=>{ h.remove(); });
-    arena.appendChild(h);
+    $('countLabel').textContent = f.label;
+    let diff = Math.max(0, new Date(f.date) - new Date());
+    const d = Math.floor(diff / 86400000); diff -= d * 86400000;
+    const h = Math.floor(diff / 3600000); diff -= h * 3600000;
+    const m = Math.floor(diff / 60000); diff -= m * 60000;
+    const s = Math.floor(diff / 1000);
+    $('cdD').textContent = d;
+    $('cdH').textContent = String(h).padStart(2,'0');
+    $('cdM').textContent = String(m).padStart(2,'0');
+    $('cdS').textContent = String(s).padStart(2,'0');
   }
-  function endGame(){
-    playing=false;
-    clearInterval(spawnTimer); clearInterval(tickTimer);
-    arena.querySelectorAll('.gheart').forEach(e=>e.remove());
-    let msg, title;
-    if(score < 5){ title='Ani bhanchhau miss garchhau? 😏'; msg='Score: '+score+'. Feri try gara na, ma wait gardira chu 😌'; }
-    else if(score < 15){ title='Not bad, maicha! 💛'; msg='Score: '+score+'. Ali practice gare pro nai ho timi!'; }
-    else { title='Woah! Timro skill ta OP cha 😍'; msg='Score: '+score+'!! Heart-catching game next level!'; }
-    if(score > best){ best = score; store.set('maicha_best', String(best)); $('gBest').textContent = best; msg += ' 🏆 NEW HIGH SCORE!'; }
-    $('gOverTitle').textContent = title;
-    $('gOverSub').textContent = 'Feri khelna tap gara';
-    gStart.textContent = 'FERI KHELAM! 🎮';
-    overlay.style.display='flex';
-    gMsg.textContent = msg;
-    boom(innerWidth/2, innerHeight*0.4, 50); buzz([50,50,50]);
-  }
-  gStart.addEventListener('click', startGame);
+  renderCountdown();
+  setInterval(renderCountdown, 1000);
 
-  /* ---------- MISS RADAR: log readings to your Google Sheet ---------- */
-  const MISS_SHEET_URL = "https://script.google.com/macros/s/AKfycbzrZK1MlQLNpwVLDr-yt2SEr5COGNgyB4VTuBnylVd1FOMWca8EztfRc2ChYamf1sH8/exec"; /* miss radar web app */
+  /* ---------- TIKA & AASHIRBAD ---------- */
+  const blessings = [
+    "May this Dashain bring you all the khusi, all the mithai, and all the aashirbad in the world 💛",
+    "Tika on your forehead, jamara on your ears, and my aashirbad always with you ✨",
+    "Laxmi Mata, please bless this one with sukh, shanti, and endless khusi 🙏",
+    "Like the Chhath surya rising, may your days only get brighter 🌅",
+    "This festival season, my only wish is you — happy, healthy, and smiling 😌"
+  ];
+  const tikaStage = $('tikaStage');
+  $('tikaBtn').addEventListener('click', ()=>{
+    const b = blessings[(Math.random()*blessings.length)|0];
+    tikaStage.innerHTML = '<div class="tika-mark">🔴🌾</div><div class="bless">' + b + '</div>';
+    buzz(30);
+    const r = $('tikaBtn').getBoundingClientRect();
+    boom(r.left + r.width/2, r.top, 40);
+  });
+
+  /* ---------- DIYA LIGHTING ---------- */
+  const diyaGrid = $('diyaGrid'), diyaMsg = $('diyaMsg');
+  const lit = new Array(9).fill(false);
+  function renderDiyas(){
+    diyaGrid.innerHTML = '';
+    let count = 0;
+    lit.forEach((on,i)=>{
+      if(on) count++;
+      const d = document.createElement('div');
+      d.className = 'diya' + (on?' lit':'');
+      d.textContent = '🪔';
+      d.addEventListener('click', ()=>{
+        if(lit[i]) return;
+        lit[i] = true; buzz(20);
+        renderDiyas();
+        const r = d.getBoundingClientRect();
+        boom(r.left + r.width/2, r.top + r.height/2, 18);
+        if(lit.every(Boolean)){
+          diyaMsg.textContent = 'Sabai diyo balyo! Tihar ko ujyalo timro lagi ✨';
+          boom(innerWidth/2, innerHeight*0.4, 60); buzz([50,50,50]);
+        }
+      });
+      diyaGrid.appendChild(d);
+    });
+    $('diyaProg').textContent = count + '/9 diyo balyo';
+  }
+  renderDiyas();
+  $('diyaReset').addEventListener('click', ()=>{
+    lit.fill(false); diyaMsg.textContent = ''; renderDiyas();
+  });
+
+  /* ---------- MISS RADAR (kept from before) ---------- */
+  const MISS_SHEET_URL = "https://script.google.com/macros/s/AKfycbzrZK1MlQLNpwVLDr-yt2SEr5COGNgyB4VTuBnylVd1FOMWca8EztfRc2ChYamf1sH8/exec";
   let lastSentMiss = -1;
+  function meterText(v){
+    if(v==0) return "0?! Cap! 😒 Feri ghumaa ta";
+    if(v<=25) return "Ali ali? Okay fine, ma adjust garchu 😌";
+    if(v<=50) return "Decent! Ma pani tetikai miss garchu 💛";
+    if(v<=75) return "Oho, serious miss! Festival ma pani yesto miss? 😏";
+    if(v<=99) return "Eti dherai?! Aaja ta text/call nai garau 🥺";
+    return "100%?! Certified miss-er 🏆💛";
+  }
   function logMiss(){
     if(!MISS_SHEET_URL || MISS_SHEET_URL.indexOf('http') !== 0) return;
     const v = +meter.value;
@@ -545,19 +481,12 @@
 
   /* ---------- MISS METER ---------- */
   const meter = $('meter'), mVal = $('meterVal'), mWord = $('meterWord');
-  function meterText(v){
-    if(v==0) return "0?! Cap! 😒 Feri ghumaa ta";
-    if(v<=25) return "Ali ali? Okay fine, ma adjust garchu 😌";
-    if(v<=50) return "Decent! Ma pani tetikai miss garchu 💛";
-    if(v<=75) return "Oho, serious miss! Hug button mathi nai cha 😏";
-    if(v<=99) return "Eti dherai?! Aaja ta text/call nai garau 🥺";
-    return "100%?! Certified miss-er 🏆💛";
-  }
   function renderMeter(){ mVal.textContent = meter.value; mWord.textContent = meterText(+meter.value); }
   meter.addEventListener('input', ()=>{ renderMeter(); });
   meter.addEventListener('change', ()=>{ buzz(20); if(+meter.value>=76) boom(innerWidth/2, 200, 30); logMiss(); });
   renderMeter();
 })();
 </script>
+<script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
