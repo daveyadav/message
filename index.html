@@ -10,8 +10,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --maroon:#7f1d1d; --maroon-deep:#4c0519; --gold:#f59e0b; --gold-soft:#fde68a;
-    --ink:#3f1d12; --card:#fffdf8; --mint:#6ee7b7; --orange:#fb923c;
+    /* Sky & Marigold — 60% sky/cream, 30% royal blue, 10% marigold gold */
+    --blue:#2563eb; --blue-deep:#1e40af; --navy:#16266c;
+    --gold:#f59e0b; --gold-soft:#fef3c7; --marigold:#fb923c; --cracker:#ef4444;
+    --ink:#1e293b; --card:#fffdf8; --sky:#dbeafe; --mint:#6ee7b7;
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html{scroll-behavior:smooth}
@@ -25,7 +27,7 @@
       radial-gradient(circle at 88% 22%, #fecdd3 0 70px, transparent 71px),
       radial-gradient(circle at 8% 62%, #fef3c7 0 80px, transparent 81px),
       radial-gradient(circle at 92% 78%, #fed7aa 0 90px, transparent 91px),
-      linear-gradient(180deg,#fff7ed 0%,#fffbeb 45%,#fef3c7 100%);
+      linear-gradient(180deg,#eff6ff 0%,#fffbeb 55%,#fef3c7 100%);
     min-height:100dvh;overflow-x:hidden;
   }
   .wrap{max-width:480px;margin:0 auto;padding:0 16px 110px}
@@ -84,7 +86,7 @@
     border-radius:28px;padding:26px 20px 24px;margin-top:26px;box-shadow:6px 6px 0 var(--ink);
     opacity:0;transform:translateY(26px);transition:opacity .5s ease,transform .5s ease}
   section.card.shown{opacity:1;transform:none}
-  section.card.dark{background:linear-gradient(160deg,#1e40af,#1e3a8a);color:#fff;border-color:#172554;box-shadow:6px 6px 0 var(--ink), 0 0 34px rgba(59,130,246,.4)}
+  section.card.dark{background:linear-gradient(160deg,#1e3a8a,#16266c);color:#fff;border-color:#172554;box-shadow:6px 6px 0 var(--ink), 0 0 34px rgba(59,130,246,.4)}
   section.card.dark .sub{opacity:.85}
   .stag{display:inline-block;font-family:'Fredoka',sans-serif;font-size:12px;font-weight:600;letter-spacing:1.5px;
     text-transform:uppercase;background:#dbeafe;border:2px solid var(--ink);border-radius:999px;
@@ -151,6 +153,35 @@
   .wish p{font-size:17px;font-weight:600;line-height:1.65}
   .wish .sign{font-family:'Fredoka',sans-serif;font-size:18px;font-weight:600;margin-top:14px}
 
+  /* ---------- games ---------- */
+  .game{background:#fff;border:3px solid var(--ink);border-radius:20px;padding:18px;box-shadow:4px 4px 0 var(--ink);margin-bottom:14px}
+  .game:last-child{margin-bottom:0}
+  .game h3{font-size:21px;margin-bottom:2px}
+  .game .g-sub{font-size:14px;font-weight:600;opacity:.7;margin-bottom:12px;line-height:1.5}
+  .game-top{display:flex;justify-content:space-between;font-size:14px;font-weight:800;margin-bottom:10px}
+  .kite-arena{position:relative;height:230px;background:linear-gradient(180deg,#dbeafe,#eff6ff);border:3px solid var(--ink);border-radius:16px;overflow:hidden;margin-bottom:12px}
+  .kite-arena .game-idle{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:800;opacity:.6;text-align:center;padding:20px;z-index:1;pointer-events:none}
+  .kite-fly{position:absolute;left:0;font-size:34px;cursor:pointer;animation:kflyGame linear forwards;filter:drop-shadow(2px 3px 2px rgba(0,0,0,.2));touch-action:none}
+  @keyframes kflyGame{from{transform:translate(-50px,0) rotate(-8deg)}to{transform:translate(520px,0) rotate(10deg)}}
+  .score-pop{animation:pop .3s ease}
+  @keyframes pop{50%{transform:scale(1.35)}}
+  .swing-stage{height:230px;background:linear-gradient(180deg,#dbeafe 0%,#eff6ff 55%,#fef3c7 100%);border:3px solid var(--ink);border-radius:16px;overflow:hidden;position:relative;margin-bottom:12px}
+  .swing-bar{position:absolute;top:18px;left:8%;right:8%;height:10px;background:var(--ink);border-radius:99px}
+  .swing-post{position:absolute;top:18px;bottom:0;width:8px;background:var(--ink);border-radius:99px}
+  .swing-post.l{left:10%}.swing-post.r{right:10%}
+  .swing-set{position:absolute;top:26px;left:50%;width:90px;margin-left:-45px;transform-origin:50% 0}
+  .rope{position:absolute;top:0;width:4px;height:110px;background:#94a3b8;border-radius:99px}
+  .rope.l{left:10px}.rope.r{right:10px}
+  .swing-seat{position:absolute;top:108px;left:50%;transform:translateX(-50%);width:76px;height:34px;background:var(--gold);border:3px solid var(--ink);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:26px}
+  .height-meter{height:14px;background:#e2e8f0;border:3px solid var(--ink);border-radius:99px;overflow:hidden;margin-bottom:6px}
+  .height-fill{height:100%;width:0%;background:linear-gradient(90deg,#60a5fa,#f59e0b);transition:width .15s}
+  .height-label{text-align:center;font-weight:800;font-size:14px;margin-bottom:12px;min-height:20px}
+  .pataka-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:12px}
+  .pataka{width:64px;height:64px;border:3px solid var(--ink);border-radius:18px;background:#fff7ed;font-size:34px;cursor:pointer;box-shadow:3px 3px 0 var(--ink);transition:transform .08s}
+  .pataka:active{transform:scale(.9)}
+  .pataka.off{opacity:.25;pointer-events:none}
+  .pataka-count{text-align:center;font-weight:800;font-size:15px}
+
   footer{position:relative;z-index:1;text-align:center;margin-top:44px;padding:0 20px}
   footer .sig{font-family:'Fredoka',sans-serif;font-size:19px;font-weight:600;line-height:1.5}
   footer .tiny{font-size:13px;font-weight:600;opacity:.6;margin-top:10px}
@@ -203,6 +234,7 @@
       <a class="chip" href="#tika">🙏 Tika</a>
       <a class="chip" href="#diya">🪔 Diya</a>
       <a class="chip" href="#festivals">🎉 Festivals</a>
+      <a class="chip" href="#games">🎮 Games</a>
     </div>
   </div>
 
@@ -253,6 +285,44 @@
     <button class="diya-reset" id="diyaReset">↺ sabai diyo nibau</button>
   </section>
 
+  <!-- GAMES -->
+  <section class="card" id="games">
+    <span class="stag">🎮 games</span>
+    <h2>Khelau!</h2>
+    <div class="sub">Festival games — changa, ping, pataka. Sabai timro lagi 💙</div>
+
+    <div class="game">
+      <h3>🪁 Changa Catch</h3>
+      <div class="g-sub">30 second ma jati sakcha changa samatau!</div>
+      <div class="game-top"><span>Score: <b id="kiteScore">0</b></span><span>Best: <b id="kiteBest">0</b></span><span>Time: <b id="kiteTime">30</b>s</span></div>
+      <div class="kite-arena" id="kiteArena"><div class="game-idle" id="kiteIdle">Ready? Start thicha 🪁</div></div>
+      <button class="btn btn-blue" id="kiteStart">Start Khelau 🪁</button>
+    </div>
+
+    <div class="game">
+      <h3>🎠 Ping Khelau</h3>
+      <div class="g-sub">Maicha ping ma! Dhakelera sky high pugau ✨</div>
+      <div class="swing-stage">
+        <div class="swing-bar"></div>
+        <div class="swing-post l"></div><div class="swing-post r"></div>
+        <div class="swing-set" id="swingSet">
+          <div class="rope l"></div><div class="rope r"></div>
+          <div class="swing-seat">👧</div>
+        </div>
+      </div>
+      <div class="height-meter"><div class="height-fill" id="heightFill"></div></div>
+      <div class="height-label" id="heightLabel">Bistarai, bistarai... 😊</div>
+      <button class="btn btn-gold" id="pushBtn">Dhakel! 💨</button>
+    </div>
+
+    <div class="game">
+      <h3>🧨 Pataka Podaau</h3>
+      <div class="g-sub">Pataka ma tap gara — boom, crackle, boom! 💥</div>
+      <div class="pataka-row" id="patakaRow"></div>
+      <div class="pataka-count">Podiyo: <b id="patakaCount">0</b> 🧨</div>
+    </div>
+  </section>
+
   <!-- FESTIVALS -->
   <section class="card" id="festivals">
     <span class="stag">🎉 festivals</span>
@@ -292,7 +362,7 @@
 
   <footer>
     <div class="sig">Timro lagi,<br>Timrai manche bata 💙<br>— Siddhu</div>
-    <div class="tiny">Dashain, Tihar, Chhath — tintai chaad parva ma timilai dherai dherai maya 💙<br>v15</div>
+    <div class="tiny">Dashain, Tihar, Chhath — tintai chaad parva ma timilai dherai dherai maya 💙<br>v16</div>
   </footer>
 </div>
 
@@ -305,6 +375,7 @@
   const buzz = ms => { try{ navigator.vibrate && navigator.vibrate(ms); }catch(e){} };
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isTouch = matchMedia('(pointer:coarse)').matches;
+  const store = { get(k,d){ try{ const v = localStorage.getItem(k); return v===null?d:v; }catch(e){ return d; } }, set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} } };
 
   /* ---------- floating diyas & flowers ---------- */
   const floaties = $('floaties');
@@ -504,6 +575,121 @@
   $('diyaReset').addEventListener('click', ()=>{
     lit.fill(false); diyaMsg.textContent = ''; renderDiyas();
   });
+  /* ---------- GAMES ---------- */
+  /* --- Changa Catch --- */
+  const kiteArena = $('kiteArena'), kiteIdle = $('kiteIdle');
+  const kiteScoreEl = $('kiteScore'), kiteBestEl = $('kiteBest'), kiteTimeEl = $('kiteTime');
+  const kiteStart = $('kiteStart');
+  let kiteBest = +store.get('kiteBest', 0) || 0;
+  kiteBestEl.textContent = kiteBest;
+  let kitePlaying = false, kiteScore = 0, kiteTime = 30, kiteSpawnTimer = null, kiteClockTimer = null;
+  function spawnKite(){
+    if(!kitePlaying) return;
+    const k = document.createElement('span');
+    k.className = 'kite-fly';
+    k.textContent = '🪁';
+    k.style.top = (5 + Math.random()*70) + '%';
+    k.style.animationDuration = (2.2 + Math.random()*1.6) + 's';
+    k.addEventListener('pointerdown', e=>{
+      e.preventDefault();
+      kiteScore++; kiteScoreEl.textContent = kiteScore;
+      kiteScoreEl.classList.remove('score-pop'); void kiteScoreEl.offsetWidth; kiteScoreEl.classList.add('score-pop');
+      const r = k.getBoundingClientRect();
+      boom(r.left + r.width/2, r.top + r.height/2, 16);
+      buzz(15);
+      k.remove();
+    });
+    k.addEventListener('animationend', ()=>k.remove());
+    kiteArena.appendChild(k);
+  }
+  function endKiteGame(){
+    kitePlaying = false;
+    clearInterval(kiteSpawnTimer); clearInterval(kiteClockTimer);
+    kiteArena.querySelectorAll('.kite-fly').forEach(k=>k.remove());
+    let msg = 'Time up! Score: ' + kiteScore + ' 🪁';
+    if(kiteScore > kiteBest){ kiteBest = kiteScore; store.set('kiteBest', kiteBest); kiteBestEl.textContent = kiteBest; msg += ' — Naya best score! 🏆'; }
+    kiteIdle.textContent = msg;
+    kiteIdle.style.display = 'flex';
+    kiteStart.textContent = 'Feri Khelau 🪁';
+  }
+  kiteStart.addEventListener('click', ()=>{
+    if(kitePlaying) return;
+    kitePlaying = true; kiteScore = 0; kiteTime = 30;
+    kiteScoreEl.textContent = '0'; kiteTimeEl.textContent = '30';
+    kiteIdle.style.display = 'none';
+    kiteStart.textContent = 'Kheldai... 🪁';
+    buzz(20);
+    spawnKite();
+    kiteSpawnTimer = setInterval(spawnKite, 750);
+    kiteClockTimer = setInterval(()=>{
+      kiteTime--; kiteTimeEl.textContent = kiteTime;
+      if(kiteTime <= 0) endKiteGame();
+    }, 1000);
+  });
+
+  /* --- Ping (swing, real pendulum physics) --- */
+  const swingSet = $('swingSet'), heightFill = $('heightFill'), heightLabel = $('heightLabel');
+  let th = 0, om = 0, lastBucket = -1, skyConfettiDone = false;
+  function swingStep(){
+    const dt = 0.016;
+    om += (-3.2*Math.sin(th) - 0.25*om) * dt;
+    th += om * dt;
+    swingSet.style.transform = 'rotate(' + (th*57.29) + 'deg)';
+    const h = Math.min(100, Math.abs(th)/1.9*100);
+    heightFill.style.width = h + '%';
+    const bucket = h < 25 ? 0 : h < 50 ? 1 : h < 75 ? 2 : 3;
+    if(bucket !== lastBucket){
+      lastBucket = bucket;
+      heightLabel.textContent = ['Bistarai, bistarai... 😊','Ramro swing! 😊','Woo, high gayo! 🎉','SKY HIGH! Maicha flying! 🪁✨'][bucket];
+      if(bucket === 3 && !skyConfettiDone){ skyConfettiDone = true; boom(innerWidth/2, 220, 40); }
+      if(bucket < 3) skyConfettiDone = false;
+    }
+    requestAnimationFrame(swingStep);
+  }
+  swingStep();
+  $('pushBtn').addEventListener('click', ()=>{
+    om += (Math.abs(om) > 0.05 ? Math.sign(om) : 1) * 1.4;
+    buzz(20);
+  });
+
+  /* --- Pataka (crackers with crackle sound) --- */
+  const patakaRow = $('patakaRow');
+  let patakaCount = 0, crackCtx = null;
+  function crackle(){
+    try{
+      if(!crackCtx) crackCtx = new (window.AudioContext || window.webkitAudioContext)();
+      crackCtx.resume();
+      for(let i=0;i<6;i++){
+        const t = crackCtx.currentTime + 0.03 + Math.random()*0.25;
+        const len = 0.03 + Math.random()*0.03;
+        const buf = crackCtx.createBuffer(1, Math.floor(crackCtx.sampleRate*len), crackCtx.sampleRate);
+        const d = buf.getChannelData(0);
+        for(let j=0;j<d.length;j++) d[j] = (Math.random()*2-1) * (1 - j/d.length);
+        const src = crackCtx.createBufferSource(); src.buffer = buf;
+        const bp = crackCtx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1800 + Math.random()*2000; bp.Q.value = 1;
+        const g = crackCtx.createGain(); g.gain.value = 0.22;
+        src.connect(bp); bp.connect(g); g.connect(crackCtx.destination);
+        src.start(t);
+      }
+    }catch(e){}
+  }
+  for(let i=0;i<6;i++){
+    const b = document.createElement('button');
+    b.className = 'pataka'; b.textContent = '🧨';
+    b.addEventListener('click', ()=>{
+      if(b.classList.contains('off')) return;
+      patakaCount++; $('patakaCount').textContent = patakaCount;
+      crackle(); buzz([30,40,30]);
+      const r = b.getBoundingClientRect();
+      boom(r.left + r.width/2, r.top + r.height/2, 40);
+      crackerBurst();
+      b.textContent = '💥';
+      b.classList.add('off');
+      setTimeout(()=>{ b.textContent = '🧨'; b.classList.remove('off'); }, 2500);
+    });
+    patakaRow.appendChild(b);
+  }
+
 })();
 </script>
 <script src="https://www.youtube.com/iframe_api"></script>
