@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#7f1d1d">
-<title>Maicha 💛 Happy Festivals!</title>
+<title>Maicha 💛 Happy Chaad Parva!</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -18,6 +18,7 @@
   body{
     font-family:'Nunito',system-ui,sans-serif;color:var(--ink);
     background:
+      radial-gradient(circle at 50% -40px, rgba(245,158,11,.45) 0 220px, transparent 221px),
       radial-gradient(circle at 12% 8%, #fde68a 0 90px, transparent 91px),
       radial-gradient(circle at 88% 22%, #fecdd3 0 70px, transparent 71px),
       radial-gradient(circle at 8% 62%, #fef3c7 0 80px, transparent 81px),
@@ -28,8 +29,24 @@
   .wrap{max-width:480px;margin:0 auto;padding:0 16px 110px}
   h1,h2,h3,.chunk{font-family:'Fredoka',sans-serif}
 
+  /* ---------- background layers: kites, crackers, floaties ---------- */
+  .kites{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+  .kite{position:absolute;font-size:34px;opacity:.9;animation:kfly linear infinite;filter:drop-shadow(2px 3px 2px rgba(0,0,0,.15))}
+  .k1{top:5%;font-size:40px;animation-duration:26s;animation-delay:0s}
+  .k2{top:13%;font-size:26px;animation-duration:34s;animation-delay:-12s}
+  .k3{top:21%;font-size:32px;animation-duration:30s;animation-delay:-22s}
+  .k4{top:9%;font-size:22px;animation-duration:40s;animation-delay:-6s}
+  @keyframes kfly{
+    0%{transform:translate(-12vw,0) rotate(-10deg)}
+    20%{transform:translate(18vw,-16px) rotate(8deg)}
+    40%{transform:translate(42vw,12px) rotate(-6deg)}
+    60%{transform:translate(66vw,-14px) rotate(7deg)}
+    80%{transform:translate(88vw,10px) rotate(-8deg)}
+    100%{transform:translate(112vw,0) rotate(-10deg)}
+  }
+  #crackers{position:fixed;inset:0;pointer-events:none;z-index:0}
   .floaties{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-  .floaties span{position:absolute;bottom:-60px;opacity:.55;animation:rise linear infinite}
+  .floaties span{position:absolute;bottom:-60px;opacity:.6;animation:rise linear infinite}
   @keyframes rise{to{transform:translateY(-112vh) rotate(40deg)}}
 
   /* ---------- hero ---------- */
@@ -79,9 +96,6 @@
 
   /* ---------- music ---------- */
   .music-note{font-size:14px;font-weight:700;opacity:.8;margin-top:10px;min-height:20px}
-  #ytPlayer{border-radius:16px;overflow:hidden;margin-top:14px;border:3px solid rgba(255,255,255,.25);min-height:60px}
-  #ytPlayer:empty{display:none}
-  .yt-link{display:block;text-align:center;margin-top:10px;font-size:13px;font-weight:800;color:var(--gold-soft);text-decoration:none}
 
   /* ---------- countdown ---------- */
   .count-row{display:flex;gap:10px;justify-content:center;margin:6px 0 10px}
@@ -126,17 +140,6 @@
   .wish p{font-size:17px;font-weight:600;line-height:1.65}
   .wish .sign{font-family:'Fredoka',sans-serif;font-size:18px;font-weight:600;margin-top:14px}
 
-  /* ---------- meter ---------- */
-  .meter-out{text-align:center;margin:6px 0 16px}
-  .meter-val{font-family:'Fredoka',sans-serif;font-size:54px;font-weight:700;color:var(--maroon)}
-  .meter-word{font-size:17px;font-weight:800;margin-top:2px;min-height:30px;line-height:1.4}
-  input[type=range]{width:100%;appearance:none;-webkit-appearance:none;height:18px;border-radius:999px;
-    background:linear-gradient(90deg,#fde68a,#fb923c,#dc2626);border:3px solid var(--ink);outline:none;margin:6px 0 4px}
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:38px;height:38px;border-radius:50%;
-    background:#fff;border:3px solid var(--ink);box-shadow:2px 2px 0 var(--ink);cursor:pointer}
-  input[type=range]::-moz-range-thumb{width:34px;height:34px;border-radius:50%;background:#fff;border:3px solid var(--ink);cursor:pointer}
-  .meter-scale{display:flex;justify-content:space-between;font-size:12px;font-weight:800;opacity:.6}
-
   footer{position:relative;z-index:1;text-align:center;margin-top:44px;padding:0 20px}
   footer .sig{font-family:'Fredoka',sans-serif;font-size:19px;font-weight:600;line-height:1.5}
   footer .tiny{font-size:13px;font-weight:600;opacity:.6;margin-top:10px}
@@ -151,6 +154,7 @@
 
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none !important;transition:none !important}
+    .kites{display:none}
   }
   @media (max-width:600px){
     .marquee .track{animation-duration:64s}
@@ -160,6 +164,10 @@
 </head>
 <body>
 
+<div class="kites" aria-hidden="true">
+  <span class="kite k1">🪁</span><span class="kite k2">🪁</span><span class="kite k3">🪁</span><span class="kite k4">🪁</span>
+</div>
+<canvas id="crackers"></canvas>
 <div class="floaties" id="floaties"></div>
 <canvas id="confetti"></canvas>
 
@@ -167,16 +175,15 @@
 
   <!-- HERO -->
   <div class="hero">
-    <span class="kicker">Dashain • Tihar • Chhath 💛</span>
-    <h1>Happy Festivals,<br>Maicha! 🪔</h1>
+    <span class="kicker">Tintai Chaad Parva 💛</span>
+    <h1>Happy Chaad Parva,<br>Maicha! 🪔</h1>
     <div class="dev">दशैं • तिहार • छठ</div>
-    <p>Dashain, Tihar, Chhath — tinnai festival ko dherai dherai shubhakamana, Maicha! Timro lagi matra hai 💛</p>
+    <p>Dashain, Tihar, Chhath — tintai chaad parva ko dherai dherai shubhakamana, Maicha! Timro lagi matra hai 💛</p>
     <div class="chips">
       <a class="chip" href="#music">🎵 Dhun</a>
       <a class="chip" href="#tika">🙏 Tika</a>
       <a class="chip" href="#diya">🪔 Diya</a>
       <a class="chip" href="#festivals">🎉 Festivals</a>
-      <a class="chip" href="#meter">📊 Miss Meter</a>
     </div>
   </div>
 
@@ -185,11 +192,9 @@
   <!-- MUSIC -->
   <section class="card dark" id="music">
     <span class="stag">🎵 music</span>
-    <h2>Dashain Dhun</h2>
-    <div class="sub">Malshree Dhun — the sound of Dashain. Tap play, let it fill the room 🎶</div>
-    <button class="btn btn-gold" id="musicBtn">▶ Play Dashain Dhun</button>
-    <div id="ytPlayer"></div>
-    <a class="yt-link" href="https://www.youtube.com/watch?v=ZO86WGyA22s" target="_blank" rel="noopener">Watch Malshree Dhun on YouTube ↗</a>
+    <h2>Dashain Dhun — Bansuri</h2>
+    <div class="sub">Malshree Dhun, flute only. Just like Dashain mornings — no vocals, no band, just bansuri 🎵</div>
+    <button class="btn btn-gold" id="musicBtn">▶ Play Bansuri Dhun</button>
     <div class="music-note" id="musicNote"></div>
   </section>
 
@@ -231,8 +236,8 @@
   <!-- FESTIVALS -->
   <section class="card" id="festivals">
     <span class="stag">🎉 festivals</span>
-    <h2>Tinnai Chad, Timro Lagi</h2>
-    <div class="sub">Teen chad, teen wishes — sabai timro lagi 💛</div>
+    <h2>Tintai Chaad Parva, Timro Lagi</h2>
+    <div class="sub">Tintai chaad parva, tintai wishes — sabai timro lagi 💛</div>
     <div class="fest-grid">
       <div class="fest">
         <div class="f-head"><h3>🌾 Dashain</h3><span class="f-dev">दशैं</span></div>
@@ -258,29 +263,16 @@
     <h2>Festival Wish for You</h2>
     <div class="wish">
       <div class="ln">for maicha, with love 💛</div>
-      <p>Maicha, Dashain, Tihar, Chhath — tinnai chad ma mero euta matra wish cha: timi khusi hos, timro muskaan hamesha yestai rahos. Tika ko din ma timilai samjhiraheko hunchu, Tihar ko diyo ma timro naam ko euta diyo balauchu, Chhath ko surya sanga timro lagi aashirbad magchu. Ani sabai bhanda thulo kura — timi. 💛</p>
+      <p>Maicha, Dashain, Tihar, Chhath — tintai chaad parva ma mero euta matra wish cha: timi khusi hos, timro muskaan hamesha yestai rahos. Tika ko din ma timilai samjhiraheko hunchu, Tihar ko diyo ma timro naam ko euta diyo balauchu, Chhath ko surya sanga timro lagi aashirbad magchu. Ani sabai bhanda thulo kura — timi. 💛</p>
       <div class="sign">— Siddhu</div>
     </div>
-  </section>
-
-  <!-- MISS METER -->
-  <section class="card" id="meter">
-    <span class="stag">📊 miss meter</span>
-    <h2>Festival Miss Meter</h2>
-    <div class="sub">Chad ma pani miss? Slider ghumaa. Honestly bhana hai, ma judge gardina 😌</div>
-    <div class="meter-out">
-      <div class="meter-val"><span id="meterVal">50</span>%</div>
-      <div class="meter-word" id="meterWord"></div>
-    </div>
-    <input type="range" id="meter" min="0" max="100" value="50">
-    <div class="meter-scale"><span>0 — cap 😒</span><span>100 — full miss 🥺</span></div>
   </section>
 
   <div class="marquee"><span class="track" id="marqueeTrack2"></span></div>
 
   <footer>
     <div class="sig">Timro lagi,<br>Timrai manche bata 💛<br>— Siddhu</div>
-    <div class="tiny">Dashain, Tihar, Chhath — tinnai chad ma timilai dherai dherai maya 💛<br>v11</div>
+    <div class="tiny">Dashain, Tihar, Chhath — tintai chaad parva ma timilai dherai dherai maya 💛<br>v12</div>
   </footer>
 </div>
 
@@ -308,11 +300,11 @@
   }
 
   /* ---------- marquee ---------- */
-  const strip = 'HAPPY DASHAIN 💛 HAPPY TIHAR 💛 HAPPY CHHATH 💛 HAPPY DASHAIN 💛 HAPPY TIHAR 💛 HAPPY CHHATH 💛 ';
+  const strip = 'TINTAI CHAAD PARVA 💛 HAPPY DASHAIN 💛 HAPPY TIHAR 💛 HAPPY CHHATH 💛 ';
   $('marqueeTrack').textContent = strip + strip;
   $('marqueeTrack2').textContent = strip + strip;
 
-  /* ---------- confetti ---------- */
+  /* ---------- confetti (tap interactions) ---------- */
   const cv = $('confetti'), cx = cv.getContext('2d');
   let parts = [], raf = null, lastTs = 0;
   function sizeCv(){ cv.width = innerWidth; cv.height = innerHeight; }
@@ -341,36 +333,131 @@
     if(!raf) cx.clearRect(0,0,cv.width,cv.height);
   }
 
+  /* ---------- ambient crackers (background fireworks) ---------- */
+  const cc = $('crackers'), cctx = cc.getContext('2d');
+  let cparts = [], craf = null, crackerTimer = null;
+  function sizeCrackers(){ cc.width = innerWidth; cc.height = innerHeight; }
+  sizeCrackers(); addEventListener('resize', sizeCrackers);
+  function crackerBurst(){
+    const x = innerWidth*(0.15+Math.random()*0.7), y = innerHeight*(0.06+Math.random()*0.35);
+    const hue = [45, 0, 280, 25, 340, 130][(Math.random()*6)|0];
+    for(let i=0;i<26;i++){
+      const a = Math.random()*Math.PI*2, sp = 1+Math.random()*2.6;
+      cparts.push({x:x, y:y, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp-0.6, life:40+Math.random()*30, hue:hue, s:2+Math.random()*2.5});
+    }
+    if(!craf) craf = requestAnimationFrame(crackerTick);
+  }
+  function crackerTick(){
+    cctx.clearRect(0,0,cc.width,cc.height);
+    cparts = cparts.filter(p=>p.life>0);
+    for(const p of cparts){
+      p.x+=p.vx; p.y+=p.vy; p.vy+=0.05; p.vx*=0.985; p.vy*=0.985; p.life--;
+      cctx.globalAlpha = Math.min(0.8, p.life/25);
+      cctx.fillStyle = 'hsl(' + p.hue + ', 90%, 60%)';
+      cctx.beginPath(); cctx.arc(p.x,p.y,p.s,0,7); cctx.fill();
+    }
+    cctx.globalAlpha = 1;
+    craf = cparts.length ? requestAnimationFrame(crackerTick) : null;
+  }
+  function crackerLoop(){
+    if(reduceMotion) return;
+    crackerBurst();
+    crackerTimer = setTimeout(crackerLoop, 2800 + Math.random()*3200);
+  }
+  setTimeout(crackerLoop, 1200);
+
   /* ---------- reveal on scroll ---------- */
   const io = new IntersectionObserver(es=>{
     es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('shown'); io.unobserve(e.target); } });
   },{threshold:.12});
   document.querySelectorAll('section.card').forEach(c=>io.observe(c));
 
-  /* ---------- MUSIC: Malshree Dhun (YouTube) ---------- */
-  let ytPlayer = null, musicOn = false;
+  /* ---------- MUSIC: Malshree Dhun — bansuri solo (Web Audio) ---------- */
+  let actx = null, masterGain = null, noiseBuf = null;
+  let fluteOn = false, fluteTimer = null;
   const musicBtn = $('musicBtn'), musicNote = $('musicNote');
-  function updateMusicBtn(){
-    musicBtn.textContent = musicOn ? '⏸ Pause Dhun' : '▶ Play Dashain Dhun';
+  const SA = 587.33; /* D5 — bansuri base note */
+  const PHRASES = [
+    [0, 4, 7, 11, 7, 4, 0, 0, 4, 7, 11, 12, 11, 7, 4, 0],
+    [0, 4, 7, 7, 11, 12, 11, 7, 4, 7, 4, 0, 0, 0, 0, 0]
+  ];
+  function noteFreq(semi){ return SA * Math.pow(2, semi/12); }
+  function initAudio(){
+    if(actx) return;
+    actx = new (window.AudioContext || window.webkitAudioContext)();
+    masterGain = actx.createGain(); masterGain.gain.value = 0.5;
+    const delay = actx.createDelay(1.0); delay.delayTime.value = 0.32;
+    const fb = actx.createGain(); fb.gain.value = 0.3;
+    const wet = actx.createGain(); wet.gain.value = 0.3;
+    masterGain.connect(actx.destination);
+    masterGain.connect(delay); delay.connect(fb); fb.connect(delay);
+    delay.connect(wet); wet.connect(actx.destination);
+    noiseBuf = actx.createBuffer(1, actx.sampleRate, actx.sampleRate);
+    const d = noiseBuf.getChannelData(0);
+    for(let i=0;i<d.length;i++) d[i] = Math.random()*2 - 1;
   }
-  window.onYouTubeIframeAPIReady = function(){
-    try{
-      ytPlayer = new YT.Player('ytPlayer', {
-        height:'180', width:'100%', videoId:'ZO86WGyA22s',
-        playerVars:{rel:0, modestbranding:1, playsinline:1},
-        events:{ onStateChange:function(e){
-          if(e.data === YT.PlayerState.PLAYING){ musicOn = true; musicNote.textContent = 'Malshree Dhun bajiraheko cha 🎶'; }
-          if(e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED){ musicOn = false; musicNote.textContent = ''; }
-          updateMusicBtn();
-        }}
-      });
-    }catch(e){}
-  };
+  function playFluteNote(freq, start, dur, vol, glideFrom){
+    const o1 = actx.createOscillator(); o1.type = 'sine';
+    const o2 = actx.createOscillator(); o2.type = 'triangle';
+    const g = actx.createGain();
+    const f = actx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 2800;
+    o1.frequency.setValueAtTime(glideFrom || freq, start);
+    o2.frequency.setValueAtTime(glideFrom || freq, start);
+    if(glideFrom){
+      o1.frequency.exponentialRampToValueAtTime(freq, start + 0.09);
+      o2.frequency.exponentialRampToValueAtTime(freq, start + 0.09);
+    }
+    o2.detune.value = 3;
+    const g2 = actx.createGain(); g2.gain.value = 0.25;
+    const noise = actx.createBufferSource(); noise.buffer = noiseBuf; noise.loop = true;
+    const nFilter = actx.createBiquadFilter(); nFilter.type = 'bandpass'; nFilter.frequency.value = 2200; nFilter.Q.value = 0.8;
+    const nGain = actx.createGain(); nGain.gain.value = 0.012;
+    const lfo = actx.createOscillator(); lfo.frequency.value = 5.2;
+    const lfoGain = actx.createGain(); lfoGain.gain.value = 0;
+    lfoGain.gain.setValueAtTime(0, start);
+    lfoGain.gain.linearRampToValueAtTime(4, start + dur*0.6);
+    lfo.connect(lfoGain); lfoGain.connect(o1.detune); lfoGain.connect(o2.detune);
+    g.gain.setValueAtTime(0, start);
+    g.gain.linearRampToValueAtTime(vol, start + 0.08);
+    g.gain.setValueAtTime(vol, start + Math.max(0.05, dur - 0.12));
+    g.gain.linearRampToValueAtTime(0, start + dur);
+    o1.connect(g); o2.connect(g2); g2.connect(g); g.connect(f); f.connect(masterGain);
+    noise.connect(nFilter); nFilter.connect(nGain); nGain.connect(f);
+    o1.start(start); o2.start(start); noise.start(start); lfo.start(start);
+    o1.stop(start + dur + 0.05); o2.stop(start + dur + 0.05);
+    noise.stop(start + dur + 0.05); lfo.stop(start + dur + 0.05);
+  }
+  function playLoop(idx){
+    if(!fluteOn) return;
+    const phrase = PHRASES[idx];
+    const t0 = actx.currentTime + 0.1;
+    let prevFreq = null;
+    phrase.forEach((semi, i)=>{
+      const isLast = i === phrase.length - 1;
+      const dur = isLast ? 1.4 : 0.42;
+      const start = t0 + i * 0.42;
+      const freq = noteFreq(semi);
+      playFluteNote(freq, start, dur, 0.5, prevFreq);
+      prevFreq = freq;
+    });
+    const total = (phrase.length - 1) * 0.42 + 1.4;
+    fluteTimer = setTimeout(()=>{ if(fluteOn) playLoop(1 - idx); }, (total + 1.0) * 1000);
+  }
+  function updateMusicBtn(){
+    musicBtn.textContent = fluteOn ? '⏸ Pause Dhun' : '▶ Play Bansuri Dhun';
+    musicNote.textContent = fluteOn ? 'Bansuri bajiraheko cha 🎶' : '';
+  }
   function toggleMusic(){
-    if(!ytPlayer){ musicNote.textContent = 'Music load hudai cha, ek chhin pachi try gara 🎶'; return; }
     try{
-      if(musicOn){ ytPlayer.pauseVideo(); }
-      else { ytPlayer.playVideo(); buzz(20); }
+      if(!fluteOn){
+        initAudio();
+        actx.resume();
+        fluteOn = true; updateMusicBtn(); playLoop(0); buzz(20);
+      } else {
+        fluteOn = false; updateMusicBtn();
+        clearTimeout(fluteTimer);
+        if(actx) actx.suspend();
+      }
     }catch(e){}
   }
   musicBtn.addEventListener('click', toggleMusic);
@@ -458,35 +545,7 @@
   $('diyaReset').addEventListener('click', ()=>{
     lit.fill(false); diyaMsg.textContent = ''; renderDiyas();
   });
-
-  /* ---------- MISS RADAR (kept from before) ---------- */
-  const MISS_SHEET_URL = "https://script.google.com/macros/s/AKfycbzrZK1MlQLNpwVLDr-yt2SEr5COGNgyB4VTuBnylVd1FOMWca8EztfRc2ChYamf1sH8/exec";
-  let lastSentMiss = -1;
-  function meterText(v){
-    if(v==0) return "0?! Cap! 😒 Feri ghumaa ta";
-    if(v<=25) return "Ali ali? Okay fine, ma adjust garchu 😌";
-    if(v<=50) return "Decent! Ma pani tetikai miss garchu 💛";
-    if(v<=75) return "Oho, serious miss! Festival ma pani yesto miss? 😏";
-    if(v<=99) return "Eti dherai?! Aaja ta text/call nai garau 🥺";
-    return "100%?! Certified miss-er 🏆💛";
-  }
-  function logMiss(){
-    if(!MISS_SHEET_URL || MISS_SHEET_URL.indexOf('http') !== 0) return;
-    const v = +meter.value;
-    if(v === lastSentMiss) return;
-    lastSentMiss = v;
-    const url = MISS_SHEET_URL + '?miss=' + v + '&msg=' + encodeURIComponent(meterText(v));
-    try { fetch(url, {mode:'no-cors'}).catch(function(){}); } catch(e){}
-  }
-
-  /* ---------- MISS METER ---------- */
-  const meter = $('meter'), mVal = $('meterVal'), mWord = $('meterWord');
-  function renderMeter(){ mVal.textContent = meter.value; mWord.textContent = meterText(+meter.value); }
-  meter.addEventListener('input', ()=>{ renderMeter(); });
-  meter.addEventListener('change', ()=>{ buzz(20); if(+meter.value>=76) boom(innerWidth/2, 200, 30); logMiss(); });
-  renderMeter();
 })();
 </script>
-<script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
