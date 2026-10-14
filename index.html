@@ -362,7 +362,7 @@
 
   <footer>
     <div class="sig">Timro lagi,<br>Timrai manche bata 💙<br>— Siddhu</div>
-    <div class="tiny">Dashain, Tihar, Chhath — tintai chaad parva ma timilai dherai dherai maya 💙<br>v16</div>
+    <div class="tiny">Dashain, Tihar, Chhath — tintai chaad parva ma timilai dherai dherai maya 💙<br>v17</div>
   </footer>
 </div>
 
@@ -463,29 +463,144 @@
   },{threshold:.12});
   document.querySelectorAll('section.card').forEach(c=>io.observe(c));
 
-    /* ---------- MUSIC: Mangal Dhun (YouTube) ---------- */
-  let ytPlayer = null, musicOn = false;
+      /* ---------- MUSIC: Mangal Dhun (YouTube) + flute fallback ---------- */
+  let ytPlayer = null, ytReady = false, musicOn = false, wantPlay = false, useFlute = false;
   const musicBtn = $('musicBtn'), musicNote = $('musicNote');
+
+  /* --- Flute fallback: Web Audio bansuri, works everywhere, no network needed --- */
+  let fluteCtx = null, fluteMaster = null, fluteNoise = null, fluteOn = false, fluteTimer = null;
+  const FLUTE_SA = 587.33;
+  const FLUTE_PHRASES = [
+    [0, 4, 7, 11, 7, 4, 0, 0, 4, 7, 11, 12, 11, 7, 4, 0],
+    [0, 4, 7, 7, 11, 12, 11, 7, 4, 7, 4, 0, 0, 0, 0, 0]
+  ];
+  function fluteFreq(semi){ return FLUTE_SA * Math.pow(2, semi/12); }
+  function fluteInit(){
+    if(fluteCtx) return;
+    fluteCtx = new (window.AudioContext || window.webkitAudioContext)();
+    fluteMaster = fluteCtx.createGain(); fluteMaster.gain.value = 0.5;
+    const delay = fluteCtx.createDelay(1.0); delay.delayTime.value = 0.32;
+    const fb = fluteCtx.createGain(); fb.gain.value = 0.3;
+    const wet = fluteCtx.createGain(); wet.gain.value = 0.3;
+    fluteMaster.connect(fluteCtx.destination);
+    fluteMaster.connect(delay); delay.connect(fb); fb.connect(delay);
+    delay.connect(wet); wet.connect(fluteCtx.destination);
+    fluteNoise = fluteCtx.createBuffer(1, fluteCtx.sampleRate, fluteCtx.sampleRate);
+    const d = fluteNoise.getChannelData(0);
+    for(let i=0;i<d.length;i++) d[i] = Math.random()*2 - 1;
+  }
+  function fluteNote(freq, start, dur, vol, glideFrom){
+    const o1 = fluteCtx.createOscillator(); o1.type = 'sine';
+    const o2 = fluteCtx.createOscillator(); o2.type = 'triangle';
+    const g = fluteCtx.createGain();
+    const f = fluteCtx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 2800;
+    o1.frequency.setValueAtTime(glideFrom || freq, start);
+    o2.frequency.setValueAtTime(glideFrom || freq, start);
+    if(glideFrom){
+      o1.frequency.exponentialRampToValueAtTime(freq, start + 0.09);
+      o2.frequency.exponentialRampToValueAtTime(freq, start + 0.09);
+    }
+    o2.detune.value = 3;
+    const g2 = fluteCtx.createGain(); g2.gain.value = 0.25;
+    const noise = fluteCtx.createBufferSource(); noise.buffer = fluteNoise; noise.loop = true;
+    const nFilter = fluteCtx.createBiquadFilter(); nFilter.type = 'bandpass'; nFilter.frequency.value = 2200; nFilter.Q.value = 0.8;
+    const nGain = fluteCtx.createGain(); nGain.gain.value = 0.012;
+    const lfo = fluteCtx.createOscillator(); lfo.frequency.value = 5.2;
+    const lfoGain = fluteCtx.createGain(); lfoGain.gain.value = 0;
+    lfoGain.gain.setValueAtTime(0, start);
+    lfoGain.gain.linearRampToValueAtTime(4, start + dur*0.6);
+    lfo.connect(lfoGain); lfoGain.connect(o1.detune); lfoGain.connect(o2.detune);
+    g.gain.setValueAtTime(0, start);
+    g.gain.linearRampToValueAtTime(vol, start + 0.08);
+    g.gain.setValueAtTime(vol, start + Math.max(0.05, dur - 0.12));
+    g.gain.linearRampToValueAtTime(0, start + dur);
+    o1.connect(g); o2.connect(g2); g2.connect(g); g.connect(f); f.connect(fluteMaster);
+    noise.connect(nFilter); nFilter.connect(nGain); nGain.connect(f);
+    o1.start(start); o2.start(start); noise.start(start); lfo.start(start);
+    o1.stop(start + dur + 0.05); o2.stop(start + dur + 0.05);
+    noise.stop(start + dur + 0.05); lfo.stop(start + dur + 0.05);
+  }
+  function flutePlayLoop(idx){
+    if(!fluteOn) return;
+    const phrase = FLUTE_PHRASES[idx];
+    const t0 = fluteCtx.currentTime + 0.1;
+    let prevFreq = null;
+    phrase.forEach((semi, i)=>{
+      const isLast = i === phrase.length - 1;
+      const dur = isLast ? 1.4 : 0.42;
+      const start = t0 + i * 0.42;
+      const freq = fluteFreq(semi);
+      fluteNote(freq, start, dur, 0.5, prevFreq);
+      prevFreq = freq;
+    });
+    const total = (phrase.length - 1) * 0.42 + 1.4;
+    fluteTimer = setTimeout(()=>{ if(fluteOn) flutePlayLoop(1 - idx); }, (total + 1.0) * 1000);
+  }
+  function startFlute(){
+    try{
+      fluteInit();
+      fluteCtx.resume();
+      fluteOn = true; flutePlayLoop(0); musicOn = true;
+      updateMusicBtn();
+    }catch(e){}
+  }
+  function stopFlute(){
+    fluteOn = false; clearTimeout(fluteTimer);
+    if(fluteCtx) fluteCtx.suspend();
+    musicOn = false; updateMusicBtn();
+  }
+
+  /* --- Player logic --- */
   function updateMusicBtn(){
-    musicBtn.textContent = musicOn ? '⏸ Pause Dhun' : '▶ Play Mangal Dhun';
-    musicNote.textContent = musicOn ? 'Mangal Dhun bajiraheko cha 🎶' : '';
+    if(useFlute){
+      musicBtn.textContent = musicOn ? '⏸ Pause Dhun' : '▶ Play Flute Dhun 🎵';
+      musicNote.textContent = musicOn ? 'Flute version bajiraheko cha 🎶' : '';
+    } else {
+      musicBtn.textContent = musicOn ? '⏸ Pause Dhun' : (wantPlay ? '⏳ Loading Dhun...' : '▶ Play Mangal Dhun');
+      musicNote.textContent = musicOn ? 'Mangal Dhun bajiraheko cha 🎶' : (wantPlay ? 'Music load hudai cha, ek chhin...' : '');
+    }
+  }
+  function switchToFlute(){
+    if(useFlute) return;
+    useFlute = true; wantPlay = false; musicOn = false;
+    try{ if(ytPlayer && ytPlayer.destroy) ytPlayer.destroy(); }catch(e){}
+    const yp = $('ytPlayer'); if(yp) yp.style.display = 'none';
+    updateMusicBtn();
+    musicNote.textContent = 'YouTube le play garna diena — flute version ready cha, play thicha 🎵';
   }
   window.onYouTubeIframeAPIReady = function(){
     try{
       ytPlayer = new YT.Player('ytPlayer', {
         height:'180', width:'100%', videoId:'DUy8NVuaPR0',
         playerVars:{rel:0, modestbranding:1, playsinline:1},
-        events:{ onStateChange:function(e){
-          if(e.data === YT.PlayerState.PLAYING){ musicOn = true; }
-          if(e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED){ musicOn = false; }
-          updateMusicBtn();
-        }}
+        events:{
+          onReady:function(){
+            ytReady = true;
+            if(wantPlay && !useFlute){ wantPlay = false; try{ ytPlayer.playVideo(); }catch(e){} }
+          },
+          onStateChange:function(e){
+            if(e.data === YT.PlayerState.PLAYING){ musicOn = true; }
+            if(e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED){ musicOn = false; }
+            updateMusicBtn();
+          },
+          onError:function(){ switchToFlute(); }
+        }
       });
-    }catch(e){}
+    }catch(e){ switchToFlute(); }
   };
+  /* If YouTube never becomes ready (blocked / very slow network), offer the flute version */
+  setTimeout(()=>{ if(!ytReady && !useFlute && wantPlay) switchToFlute(); }, 9000);
   function toggleMusic(){
-    if(!ytPlayer){ musicNote.textContent = 'Music load hudai cha, ek chhin pachi try gara 🎶'; return; }
     try{
+      if(useFlute){
+        if(musicOn) stopFlute(); else startFlute();
+        buzz(20); return;
+      }
+      if(!ytReady || !ytPlayer){
+        wantPlay = !wantPlay;
+        updateMusicBtn();
+        return;
+      }
       if(musicOn){ ytPlayer.pauseVideo(); }
       else { ytPlayer.playVideo(); buzz(20); }
     }catch(e){}
